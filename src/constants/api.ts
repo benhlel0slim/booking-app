@@ -1,1 +1,1 @@
-export const URL_RESTAURANT = 'http://be-roan.vercel.app';
+export const URL_RESTAURANT = 'https://be-roan.vercel.app';

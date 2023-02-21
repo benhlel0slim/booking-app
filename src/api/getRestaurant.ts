@@ -1,6 +1,10 @@
 import { Restaurant } from './../types/restaurant';
 import { URL_RESTAURANT } from '../constants/api';
 
+/**
+ * Get restaurant data
+ * `useQuery`
+ */
 export const getRestaurant = async (restaurantId: string) => {
 	const endpoint = `${URL_RESTAURANT}/restaurant/${restaurantId}`;
 	try {
