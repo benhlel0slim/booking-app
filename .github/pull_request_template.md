@@ -6,8 +6,6 @@
 
 <!-- 03. List the GitHub issues that will be closed by this pull request -->
 
-- Closes #ISSUE_NUMBER
-
 ## Type of change(s) <!-- Keep the relevant type(s) -->
 
 - 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)

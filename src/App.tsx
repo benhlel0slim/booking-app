@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Client from './components/client';
+import Client from './components/client/client';
 import Layout from './components/layout/layout';
 
 const router = createBrowserRouter([
