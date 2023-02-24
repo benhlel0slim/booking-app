@@ -1,17 +1,15 @@
 /**
  * To use with `useSearchParams`
  *
- * Convert UrlSearchParams to `[key,value]` tuple
+ * Convert UrlSearchParams to `{key,value}`
  */
 export const getKeyValuesFromUrlSearchParam = (
 	searchParams: URLSearchParams
 ) => {
-	let arr1: [string, string][] = [];
+	let initParam: Record<string, string> = {};
 	for (const [key, value] of searchParams.entries()) {
-		const arr: [string, string] = [key, value];
-
-		arr1 = [...arr1, arr];
+		initParam = { ...initParam, [key]: value };
 	}
 
-	return arr1;
+	return initParam;
 };
