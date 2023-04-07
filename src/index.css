@@ -101,3 +101,9 @@ abbr[title] {
 	order: -1;
 }
 
+.green {
+	background-color: var(--color-accept);
+}
+.red {
+	background-color: var(--color-warning);
+}
