@@ -31,14 +31,36 @@ export function Calendar() {
 		},
 	]);
 	console.log(currentMonth.data, secondMonth.data, thirdMonth.data);
-	const highlightDates = [currentMonth.data, secondMonth.data, thirdMonth.data];
+
 	const [date, setDate] = useState(new Date());
 
 	function tileClassName({ date, view }: { date: Date; view: Detail }) {
-		if (view === 'month' && secondMonth.data) {
-			const keys = Object.keys(secondMonth.data); //get keys from object as an array
-			const isAvailable = keys.includes(date.getDate().toString());
+		//date 10 04 2023 view === 'month'
+		if (view === 'month' && currentMonth.data && date.getMonth() === month) {
+			const keys = Object.keys(currentMonth.data); //['12','13','14','15','16'...]
+
+			const isAvailable = keys.includes(date.getDate().toString()); // '10' isAvailable=false
 			return isAvailable ? 'green' : 'red';
+			/* if (isAvailable) {
+				return 'green';
+			}
+			return 'red'; */
+		}
+		if (view === 'month' && secondMonth.data && date.getMonth() === month + 1) {
+			const keys = Object.keys(secondMonth.data); //['12','13','14','15','16'...]
+
+			const isAvailable = keys.includes(date.getDate().toString()); // '10' isAvailable=false
+			return isAvailable ? 'green' : 'red';
+			/* if (isAvailable) {
+				return 'green';
+			}
+			return 'red'; */
+		}
+		if (view === 'month' && thirdMonth.data && date.getMonth() === month + 2) {
+			const keys = Object.keys(thirdMonth.data); //['12','13','14','15','16'...]
+
+			const isAvailable1 = keys.includes(date.getDate().toString()); // '10' isAvailable=false
+			return isAvailable1 ? 'green' : 'red';
 			/* if (isAvailable) {
 				return 'green';
 			}
