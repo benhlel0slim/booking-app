@@ -14,10 +14,12 @@ function Layout() {
 	return (
 		<div>
 			<div className={styles.navbar}>
-				<p>
-					Reservation au Resto
-					<span className={styles.restaurantName}>{` ${data?.name}`}</span>
-				</p>
+				{data && (
+					<p>
+						Reservation au Resto
+						<span className={styles.restaurantName}>{` ${data?.name}`}</span>
+					</p>
+				)}
 			</div>
 			<div className={styles.main}>
 				<Outlet />

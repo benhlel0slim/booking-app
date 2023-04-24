@@ -1,7 +1,7 @@
 /**
  * To use with `useSearchParams`
  *
- * Convert UrlSearchParams to `{key,value}`
+ * Convert UrlSearchParams to `{key:value,key2:value2}`
  */
 export const getKeyValuesFromUrlSearchParam = (
 	searchParams: URLSearchParams

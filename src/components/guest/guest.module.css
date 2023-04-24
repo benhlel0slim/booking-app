@@ -1,0 +1,25 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 80px;
+}
+
+.title {
+	font-size: 30px;
+}
+
+.outlinedInput {
+	margin: 40px;
+	padding: 0;
+}
+
+.input {
+	text-align: center;
+}
+
+@media screen and (max-width: 400px) {
+	.title {
+		font-size: 20px;
+	}
+}
