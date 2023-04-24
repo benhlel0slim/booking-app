@@ -16,7 +16,7 @@ export const Guest = () => {
 		setGuest(name === 'min' ? guest - 1 : guest + 1);
 
 	const onNextPage = () => {
-		setSearchParams({ step: 'menu' });
+		setSearchParams({ step: 'menu', guest: 'guest' });
 	};
 
 	return (
