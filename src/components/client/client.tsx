@@ -6,14 +6,26 @@ import { Guest } from '../guest/guest';
 import { Menu } from '../menu/menu';
 import { Reservation } from '../reservation/reservation';
 import { useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useQuery } from 'react-query';
+import { getRestaurant } from '../../api/getRestaurant';
+import { useParams } from 'react-router-dom';
 
 function Client() {
+	const { restaurantId } = useParams();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const step = searchParams.get('step');
+	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
+		getRestaurant(restaurantId || '')
+	);
 
 	useEffect(() => {
 		if (!step) setSearchParams({ step: 'guest' });
 	}, [setSearchParams, step]);
+
+	if (!data) {
+		return <CircularProgress />;
+	}
 
 	return (
 		<>
