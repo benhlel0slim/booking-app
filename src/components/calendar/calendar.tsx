@@ -1,9 +1,8 @@
 import CalendarComponent, { Detail } from 'react-calendar';
-import { useQueries, useQuery } from 'react-query';
+import { useQueries } from 'react-query';
 import { getMonth } from '../../api/getMonth';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
-import { getRestaurant } from '../../api/getRestaurant';
 import styles from './calendar.module.css';
 import dayjs from 'dayjs';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -17,11 +16,17 @@ const months = [month, month + 1, month + 2];
 
 export function Calendar() {
 	const [date, setDate] = useState(new Date());
+	const [type, setType] = useState('Court');
 	const { restaurantId } = useParams();
-	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
-		getRestaurant(restaurantId || '')
-	);
-	console.log(data);
+	const [, setSearchParams] = useSearchParams();
+
+	const onNextPage = () => {
+		setSearchParams({ step: 'reservation' });
+	};
+
+	const handleChange = (event: SelectChangeEvent) => {
+		setType(event.target.value);
+	};
 
 	const monthData = useQueries(
 		months.map((m) => ({
@@ -44,13 +49,12 @@ export function Calendar() {
 	const index = months.indexOf(date.getMonth());
 	const times = monthData[index].data?.[date.getDate()];
 	const reservationTime = times?.map((time) => {
-		return <span> {dayjs(time).format('HH:mm')}</span>;
+		return (
+			<button className={styles.button} onClick={onNextPage}>
+				{dayjs(time).format('HH:mm')}
+			</button>
+		);
 	});
-
-	const [type, setType] = useState('');
-	const handleChange = (event: SelectChangeEvent) => {
-		setType(event.target.value as string);
-	};
 
 	return (
 		<div className={styles.container}>
@@ -60,11 +64,12 @@ export function Calendar() {
 				minDate={new Date()}
 				maxDate={new Date(maxDate)}
 				tileClassName={tileClassName}
+				locale="fr-FR"
 			/>
-			<div className={styles.cardContent}>
-				<div className={styles.cardContentGreen}></div>
+			<div className={styles.legends}>
+				<div className={styles.legendGreen} />
 				<p>Horaires disponibles</p>
-				<div className={styles.cardContentRed}></div>
+				<div className={styles.legendRed} />
 				<p>Pas d'heures disponibles</p>
 			</div>
 			<div className={styles.text}>
@@ -72,21 +77,21 @@ export function Calendar() {
 					veuillez <b>choisir </b>
 				</p>
 			</div>
-			<div className={styles.divSelect}>
+			<div className={styles.selectWrapper}>
 				<Select
 					className={styles.select}
-					labelId="type of reservation"
 					id="type of reservation"
 					value={type}
 					size="small"
-					label="Type"
 					onChange={handleChange}
 				>
-					<MenuItem value={'long'}>long</MenuItem>
-					<MenuItem value={'court'}>court</MenuItem>
+					<MenuItem value="Long">Long</MenuItem>
+					<MenuItem value="Court">Court</MenuItem>
 				</Select>
 			</div>
-			<div className={styles.reservationTime}>{reservationTime}</div>
+			<div className={styles.reservationTime}>
+				{reservationTime || 'Indisponible pour Reservation'}
+			</div>
 		</div>
 	);
 }
