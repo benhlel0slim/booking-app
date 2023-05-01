@@ -107,3 +107,9 @@ abbr[title] {
 .red {
 	background-color: var(--color-warning);
 }
+button.react-calendar__tile.react-calendar__month-view__days__day.green {
+	color: white;
+}
+button.react-calendar__tile.react-calendar__month-view__days__day.red {
+	color: white;
+}
