@@ -19,7 +19,7 @@
 }
 
 .main {
-	height: calc(100vh - var(--footer-h) - var(--navbar-h));
+	min-height: calc(100vh - var(--footer-h) - var(--navbar-h));
 	width: 80%;
 	margin: 0 auto;
 }
