@@ -16,7 +16,7 @@ function Layout() {
 			<div className={styles.navbar}>
 				{data && (
 					<p>
-						Reservation au Resto
+						<b>Reservation au Resto</b>
 						<span className={styles.restaurantName}>{` ${data?.name}`}</span>
 					</p>
 				)}

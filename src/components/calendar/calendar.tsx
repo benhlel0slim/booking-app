@@ -7,6 +7,7 @@ import styles from './calendar.module.css';
 import dayjs from 'dayjs';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
 
 const today = new Date();
 const year = today.getFullYear();
@@ -18,10 +19,18 @@ export function Calendar() {
 	const [date, setDate] = useState(new Date());
 	const [type, setType] = useState('Court');
 	const { restaurantId } = useParams();
-	const [, setSearchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 
-	const onNextPage = () => {
-		setSearchParams({ step: 'reservation' });
+	const onNextPage = (time: string) => {
+		setSearchParams({
+			...getKeyValuesFromUrlSearchParam(searchParams),
+			step: 'condition',
+			duration: type,
+			time,
+			year: dayjs(date).format('YYYY'),
+			month: dayjs(date).format('MM'),
+			day: dayjs(date).format('DD'),
+		});
 	};
 
 	const handleChange = (event: SelectChangeEvent) => {
@@ -49,9 +58,10 @@ export function Calendar() {
 	const index = months.indexOf(date.getMonth());
 	const times = monthData[index].data?.[date.getDate()];
 	const reservationTime = times?.map((time) => {
+		const currentTime = dayjs(time).format('HH:mm');
 		return (
-			<button className={styles.button} onClick={onNextPage}>
-				{dayjs(time).format('HH:mm')}
+			<button className={styles.button} onClick={() => onNextPage(currentTime)}>
+				{currentTime}
 			</button>
 		);
 	});

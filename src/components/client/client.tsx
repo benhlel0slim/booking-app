@@ -10,6 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useQuery } from 'react-query';
 import { getRestaurant } from '../../api/getRestaurant';
 import { useParams } from 'react-router-dom';
+import { Navigation } from '../navigation-module/navigation';
 
 function Client() {
 	const { restaurantId } = useParams();
@@ -29,12 +30,13 @@ function Client() {
 
 	return (
 		<>
+			{<Navigation />}
 			{step === 'guest' && <Guest />}
 			{step === 'menu' && <Menu />}
 			{step === 'calendar' && <Calendar />}
+			{step === 'condition' && <Condition />}
 			{step === 'reservation' && <Reservation />}
 			{step === 'confirmation' && <Confirmation />}
-			{step === 'condition' && <Condition />}
 		</>
 	);
 }

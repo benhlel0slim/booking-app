@@ -9,6 +9,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
 
 export function Menu() {
 	const { restaurantId } = useParams();
@@ -28,9 +29,14 @@ export function Menu() {
 		setValue(event.target.value);
 	};
 
-	const [, setSearchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const onNextPage = () => {
-		setSearchParams({ step: 'calendar' });
+		if (value)
+			setSearchParams({
+				...getKeyValuesFromUrlSearchParam(searchParams),
+				step: 'calendar',
+				menu: value,
+			});
 	};
 
 	return (
