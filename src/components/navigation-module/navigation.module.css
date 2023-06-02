@@ -6,7 +6,6 @@
 	margin: 30px;
 }
 .btn {
-	border-color: white;
-	background-color: white;
-	border-style: hidden;
+	border: none;
+	background-color: transparent;
 }
