@@ -1,6 +1,12 @@
 .container {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
+	justify-content: center;
 	margin: 30px;
+}
+.btn {
+	border-color: white;
+	background-color: white;
+	border-style: hidden;
 }
