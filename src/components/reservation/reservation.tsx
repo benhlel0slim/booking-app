@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useCreateReservation } from '../../api/createReservation';
+import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
 
 const schema = yup
 	.object({
@@ -27,6 +28,7 @@ export function Reservation() {
 	const duration = searchParams.get('duration');
 	const onNextPage = () => {
 		setSearchParams({
+			...getKeyValuesFromUrlSearchParam(searchParams),
 			step: 'confirmation',
 		});
 	};
