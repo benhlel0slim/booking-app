@@ -1,17 +1,24 @@
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import styles from './condition.module.css';
 import Button from '@mui/material/Button';
 import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
+import { useQuery } from 'react-query';
+import { getRestaurant } from '../../api/getRestaurant';
 
 export function Condition() {
+	const { restaurantId } = useParams();
+	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
+		getRestaurant(restaurantId || '')
+	);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const time = searchParams.get('time');
 	const onNextPage = () => {
 		setSearchParams({
+			...getKeyValuesFromUrlSearchParam(searchParams),
 			step: 'reservation',
 		});
 	};
-	getKeyValuesFromUrlSearchParam(searchParams);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.title}>
@@ -28,7 +35,7 @@ export function Condition() {
 					<br /> <br />
 					Cordialement,
 					<br />
-					<br /> Chez Bibi
+					<br /> {` ${data?.name}.`}
 				</p>
 			</div>
 			<Button onClick={onNextPage} variant="contained">
