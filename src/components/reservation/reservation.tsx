@@ -8,11 +8,19 @@ import * as yup from 'yup';
 import { useCreateReservation } from '../../api/createReservation';
 import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
 
+const phoneRegExp =
+	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const schema = yup
 	.object({
-		name: yup.string().required(),
-		email: yup.string().email().required(),
-		phone: yup.string().required(),
+		name: yup.string().required('Le Nom et le Prenom sont obligatoires'),
+		email: yup
+			.string()
+			.email('email incorrect')
+			.required('Votre Email est obligatoire'),
+		phone: yup
+			.string()
+			.matches(phoneRegExp, 'Numero incorrect')
+			.required('Votre numero est obligatoire'),
 	})
 	.required();
 type FormData = yup.InferType<typeof schema>;
@@ -72,46 +80,29 @@ export function Reservation() {
 				<div className={styles.forms}>
 					<TextField
 						required
-						id="Nom et Prenom"
 						label="Nom Prenom"
 						placeholder="Nom prenom"
 						variant="standard"
-						{...register('name', {
-							required: 'Le Nom et le PreNom sont obligatoires',
-						})}
+						{...register('name')}
 						error={Boolean(errors.name)}
 						helperText={errors.name?.message}
 					/>
 					<TextField
 						required
-						id="Email"
 						label="E-mail"
 						type="e-mail"
 						autoComplete="current-email"
 						variant="standard"
-						{...register('email', {
-							required: 'Votre Email est obligatoire',
-							pattern: {
-								value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-								message: 'email incorrect',
-							},
-						})}
+						{...register('email')}
 						error={Boolean(errors.email)}
 						helperText={errors.email?.message}
 					/>
 					<TextField
 						required
-						id="Phone number"
 						label="Numero de Telephone"
 						type="numeric"
 						variant="standard"
-						{...register('phone', {
-							required: 'Votre Numero est obligatoire',
-							pattern: {
-								value: /[0-9]{8}/,
-								message: 'Numero incorrect',
-							},
-						})}
+						{...register('phone')}
 						error={Boolean(errors.phone)}
 						helperText={errors.phone?.message}
 					/>
