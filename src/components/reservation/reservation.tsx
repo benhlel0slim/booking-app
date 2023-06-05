@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import styles from './reservation.module.css';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,6 +18,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 export function Reservation() {
+	const { restaurantId } = useParams();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const time = searchParams.get('time');
 	const guests = searchParams.get('guest');
@@ -42,16 +43,19 @@ export function Reservation() {
 
 	const { mutate } = useCreateReservation();
 	const onSubmit = async (data: FormData) => {
-		console.log(data);
+		if (!duration || !menu || !time || !guests || !restaurantId) {
+			return;
+		}
 		const newData = {
 			...data,
+			guests: Number(guests),
 			duration,
 			time,
-			year,
+			year: Number(year),
 			menu,
-			guests,
-			month,
-			day,
+			month: Number(month),
+			day: Number(day),
+			restaurant: restaurantId,
 		};
 		await mutate(newData);
 		onNextPage();
