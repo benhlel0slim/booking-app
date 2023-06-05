@@ -17,7 +17,7 @@ const months = [month, month + 1, month + 2];
 
 export function Calendar() {
 	const [date, setDate] = useState(new Date());
-	const [type, setType] = useState('Court');
+	const [type, setType] = useState('short');
 	const { restaurantId } = useParams();
 	const [searchParams, setSearchParams] = useSearchParams();
 
@@ -95,8 +95,8 @@ export function Calendar() {
 					size="small"
 					onChange={handleChange}
 				>
-					<MenuItem value="Long">Long</MenuItem>
-					<MenuItem value="Court">Court</MenuItem>
+					<MenuItem value="long">Long</MenuItem>
+					<MenuItem value="short">Court</MenuItem>
 				</Select>
 			</div>
 			<div className={styles.reservationTime}>
