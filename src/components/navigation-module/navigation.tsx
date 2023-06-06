@@ -39,22 +39,22 @@ export const Navigation = () => {
 		<div className={styles.container}>
 			{guest && (
 				<button className={styles.btn} onClick={guestPage}>
-					<GroupIcon />
+					<GroupIcon className={styles.icons} />
 					{guest}
 				</button>
 			)}
 
 			{menu && (
 				<button className={styles.btn} onClick={menuPage}>
-					<RestaurantMenuIcon />
+					<RestaurantMenuIcon className={styles.icons} />
 					{menu}
 				</button>
 			)}
 
 			{time && (
 				<button className={styles.btn} onClick={calendarPage}>
-					<CalendarMonthIcon />
-					{day}.{month}.{year} ,{time}
+					<CalendarMonthIcon className={styles.icons} />
+					{day} {month} {year}, {time}
 				</button>
 			)}
 		</div>

@@ -28,7 +28,7 @@ export function Calendar() {
 			duration: type,
 			time,
 			year: dayjs(date).format('YYYY'),
-			month: dayjs(date).format('MM'),
+			month: dayjs(date).format('MMMM'),
 			day: dayjs(date).format('DD'),
 		});
 	};

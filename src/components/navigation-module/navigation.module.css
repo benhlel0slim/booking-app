@@ -6,6 +6,15 @@
 	margin: 30px;
 }
 .btn {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 	border: none;
 	background-color: transparent;
+	color: #414141;
+	cursor: pointer;
+}
+.icons {
+	padding-right: 10px;
+	color: #414141;
 }
