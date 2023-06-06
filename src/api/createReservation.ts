@@ -1,6 +1,7 @@
 import { Reservation, ReservationData } from '../types/reservation';
 import { URL_RESTAURANT } from '../constants/api';
 import { useMutation } from 'react-query';
+import { ReservationError } from '../types/error';
 
 /**
  * Post reservation data
@@ -17,12 +18,14 @@ export const createReservation = async (reservation: Reservation) => {
 			},
 			body: JSON.stringify(reservation),
 		});
-		const content: ReservationData = await rawResponse.json();
+		const content: ReservationData | ReservationError =
+			await rawResponse.json();
 		return content;
 	} catch (error) {
 		throw new Error('something went wrong, the reservation was not sent');
 	}
 };
+
 export const useCreateReservation = () => {
 	return useMutation(createReservation);
 };

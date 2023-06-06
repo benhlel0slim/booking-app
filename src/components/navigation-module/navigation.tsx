@@ -14,45 +14,31 @@ export const Navigation = () => {
 	const month = searchParams.get('month');
 	const year = searchParams.get('year');
 
-	const guestPage = () => {
-		if (guest)
-			setSearchParams({
-				...getKeyValuesFromUrlSearchParam(searchParams),
-				step: 'guest',
-			});
+	const handleClick = (step: 'guest' | 'menu' | 'calendar') => {
+		setSearchParams({
+			...getKeyValuesFromUrlSearchParam(searchParams),
+			step,
+		});
 	};
-	const menuPage = () => {
-		if (menu)
-			setSearchParams({
-				...getKeyValuesFromUrlSearchParam(searchParams),
-				step: 'menu',
-			});
-	};
-	const calendarPage = () => {
-		if (time)
-			setSearchParams({
-				...getKeyValuesFromUrlSearchParam(searchParams),
-				step: 'calendar',
-			});
-	};
+
 	return (
 		<div className={styles.container}>
 			{guest && (
-				<button className={styles.btn} onClick={guestPage}>
+				<button className={styles.btn} onClick={() => handleClick('guest')}>
 					<GroupIcon className={styles.icons} />
 					{guest}
 				</button>
 			)}
 
 			{menu && (
-				<button className={styles.btn} onClick={menuPage}>
+				<button className={styles.btn} onClick={() => handleClick('menu')}>
 					<RestaurantMenuIcon className={styles.icons} />
 					{menu}
 				</button>
 			)}
 
 			{time && (
-				<button className={styles.btn} onClick={calendarPage}>
+				<button className={styles.btn} onClick={() => handleClick('calendar')}>
 					<CalendarMonthIcon className={styles.icons} />
 					{day} {month} {year}, {time}
 				</button>

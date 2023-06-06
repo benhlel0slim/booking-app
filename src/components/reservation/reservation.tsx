@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useCreateReservation } from '../../api/createReservation';
 import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
+import { toast } from 'react-toastify';
 
 const phoneRegExp =
 	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -49,7 +50,7 @@ export function Reservation() {
 		resolver: yupResolver(schema),
 	});
 
-	const { mutate } = useCreateReservation();
+	const { mutateAsync } = useCreateReservation();
 	const onSubmit = async (data: FormData) => {
 		if (!duration || !menu || !time || !guests || !restaurantId) {
 			return;
@@ -65,8 +66,14 @@ export function Reservation() {
 			day: Number(day),
 			restaurant: restaurantId,
 		};
-		await mutate(newData);
-		onNextPage();
+		const res = await mutateAsync(newData);
+		if ('cod' in res) {
+			toast(res.message.message, {
+				position: 'bottom-right',
+				type: 'error',
+				autoClose: 5000,
+			});
+		} else onNextPage();
 	};
 
 	return (
@@ -76,6 +83,7 @@ export function Reservation() {
 					Confirmer la <b>reservation</b>
 				</p>
 			</div>
+
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className={styles.forms}>
 					<TextField

@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
+import { CircularProgress } from '@mui/material';
 
 const today = new Date();
 const year = today.getFullYear();
@@ -16,10 +17,18 @@ const maxDate = new Date().setMonth(new Date().getMonth() + 3, 0);
 const months = [month, month + 1, month + 2];
 
 export function Calendar() {
-	const [date, setDate] = useState(new Date());
-	const [type, setType] = useState('short');
-	const { restaurantId } = useParams();
 	const [searchParams, setSearchParams] = useSearchParams();
+	const durationInit = searchParams.get('duration');
+	const dayInit = searchParams.get('day');
+	const monthInit = searchParams.get('month');
+	const yearInit = searchParams.get('year');
+	const [date, setDate] = useState(
+		dayInit && monthInit && yearInit
+			? new Date(Number(yearInit), Number(monthInit), Number(dayInit))
+			: new Date()
+	);
+	const [type, setType] = useState(durationInit || 'short');
+	const { restaurantId } = useParams();
 
 	const onNextPage = (time: string) => {
 		setSearchParams({
@@ -28,7 +37,7 @@ export function Calendar() {
 			duration: type,
 			time,
 			year: dayjs(date).format('YYYY'),
-			month: dayjs(date).format('MMMM'),
+			month: dayjs(date).format('MM'),
 			day: dayjs(date).format('DD'),
 		});
 	};
@@ -65,7 +74,13 @@ export function Calendar() {
 			</button>
 		);
 	});
-
+	if (!monthData) {
+		return (
+			<div className={styles.circularProgress}>
+				<CircularProgress />
+			</div>
+		);
+	}
 	return (
 		<div className={styles.container}>
 			<CalendarComponent
