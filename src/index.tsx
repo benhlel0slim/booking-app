@@ -5,6 +5,8 @@ import './index.css';
 import App from './App';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
@@ -22,6 +24,7 @@ const theme = createTheme({
 root.render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
+			<ToastContainer />
 			<ThemeProvider theme={theme}>
 				<App />
 			</ThemeProvider>

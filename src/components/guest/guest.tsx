@@ -7,16 +7,22 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import RemoveIcon from '@mui/icons-material/Remove';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useSearchParams } from 'react-router-dom';
+import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
 
 export const Guest = () => {
-	const [guest, setGuest] = useState(1);
-	const [, setSearchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const guestInit = searchParams.get('guest');
+	const [guest, setGuest] = useState(guestInit ? Number(guestInit) : 1);
 
 	const handleClick = (name: 'min' | 'max') =>
 		setGuest(name === 'min' ? guest - 1 : guest + 1);
 
 	const onNextPage = () => {
-		setSearchParams({ step: 'menu', guest: 'guest' });
+		setSearchParams({
+			...getKeyValuesFromUrlSearchParam(searchParams),
+			step: 'menu',
+			guest: String(guest),
+		});
 	};
 
 	return (

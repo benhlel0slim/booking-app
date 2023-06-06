@@ -113,3 +113,11 @@ button.react-calendar__tile.react-calendar__month-view__days__day.green {
 button.react-calendar__tile.react-calendar__month-view__days__day.red {
 	color: white;
 }
+.react-calendar__tile--active {
+	background-color: #414141;
+}
+.demoLink {
+	display: flex;
+	justify-content: center;
+	margin: 100px;
+}
