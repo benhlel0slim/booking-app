@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './user.module.css';
+import styles from './loginForm.module.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,7 +22,7 @@ const schema = yup
 	.required();
 type FormData = yup.InferType<typeof schema>;
 
-function User() {
+function LoginForm() {
 	const {
 		register,
 		handleSubmit,
@@ -46,7 +46,7 @@ function User() {
 				<div className={styles.forms}>
 					<TextField
 						required
-						label="E-mail"
+						label="e-mail"
 						type="e-mail"
 						autoComplete="current-email"
 						variant="standard"
@@ -74,4 +74,4 @@ function User() {
 	);
 }
 
-export default User;
+export default LoginForm;
