@@ -8,7 +8,8 @@ import dayjs from 'dayjs';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
-import { CircularProgress } from '@mui/material';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const today = new Date();
 const year = today.getFullYear();
@@ -74,10 +75,23 @@ export function Calendar() {
 			</button>
 		);
 	});
-	if (!monthData) {
+	if (
+		monthData[0].status !== 'success' ||
+		monthData[1].status !== 'success' ||
+		monthData[2].status !== 'success'
+	) {
 		return (
-			<div className={styles.circularProgress}>
-				<CircularProgress />
+			<div className={styles.skeletonWrapper}>
+				<h2 className={styles.skeletonTitle}>
+					<Skeleton />
+				</h2>
+
+				<p>
+					<Skeleton className={styles.skeletonCalendar} />
+				</p>
+				<h2 className={styles.skeleton}>
+					<Skeleton />
+				</h2>
 			</div>
 		);
 	}
