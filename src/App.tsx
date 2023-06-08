@@ -3,6 +3,8 @@ import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import Client from './components/client/client';
 import Layout from './components/layout/layout';
 import Button from '@mui/material/Button';
+import User from './components/user/loginForm/loginForm';
+/* import SignupForm from './components/user/signupForm/signupForm'; */
 
 const router = createBrowserRouter([
 	{
@@ -13,6 +15,14 @@ const router = createBrowserRouter([
 				path: 'restaurant/:restaurantId',
 				element: <Client />,
 			},
+			{
+				path: 'admin/login',
+				element: <User />,
+			},
+			/* {
+				path: 'admin/signup',
+				element: <SignupForm />,
+			}, */
 			{
 				path: '/',
 				element: (
