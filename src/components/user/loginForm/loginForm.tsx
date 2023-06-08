@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './loginForm.module.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { useCreateUser } from '../../api/createUser';
+import { useCreateUser } from '../../../api/createUser';
+import { IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 const passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
 const schema = yup
@@ -23,6 +26,15 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 function LoginForm() {
+	const [showPassword, setShowPassword] = useState(false);
+
+	const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+	const handleMouseDownPassword = (
+		event: React.MouseEvent<HTMLButtonElement>
+	) => {
+		event.preventDefault();
+	};
 	const {
 		register,
 		handleSubmit,
@@ -42,8 +54,8 @@ function LoginForm() {
 					Veuillez <b>vous connecter</b>
 				</p>
 			</div>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className={styles.forms}>
+			<form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
+				<div className={styles.input}>
 					<TextField
 						required
 						label="e-mail"
@@ -57,7 +69,20 @@ function LoginForm() {
 					<TextField
 						required
 						label="mot de passe"
-						type="numeric"
+						type={showPassword ? 'text' : 'password'}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton
+										aria-label="toggle password visibility"
+										onClick={handleClickShowPassword}
+										onMouseDown={handleMouseDownPassword}
+									>
+										{showPassword ? <VisibilityOff /> : <Visibility />}
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 						variant="standard"
 						{...register('password')}
 						error={Boolean(errors.password)}
@@ -68,6 +93,14 @@ function LoginForm() {
 					<Button type="submit" variant="contained">
 						SE CONNECTER
 					</Button>
+				</div>
+				<div className={styles.link}>
+					<Link to="/admin/signup">Ou Créer un compte</Link>
+				</div>
+				<div className={styles.link}>
+					<Link to="">
+						Login as a <b>Demo User</b>
+					</Link>
 				</div>
 			</form>
 		</div>
