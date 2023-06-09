@@ -8,9 +8,9 @@ import { useForm } from 'react-hook-form';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import { useCreateSignup } from '../../../api/createSignup';
+import { useCreateUser } from '../../../api/createUser';
+import { passwordRegExp } from '../../../constants/passwordRegExp';
 
-const passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
 const schema = yup
 	.object({
 		name: yup.string().required('Le Nom et le Prenom sont obligatoires'),
@@ -35,15 +35,13 @@ type FormData = yup.InferType<typeof schema>;
 
 function SignupForm() {
 	const [showPassword, setShowPassword] = useState(false);
-	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
-	const handleClickShowConfirmPassword = () =>
-		setShowConfirmPassword((show) => !show);
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => {
 		event.preventDefault();
 	};
+
 	const {
 		register,
 		handleSubmit,
@@ -51,10 +49,9 @@ function SignupForm() {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-	const { mutateAsync } = useCreateSignup();
+	const { mutateAsync } = useCreateUser();
 	const onSubmit = async (data: FormData) => {
-		const user = await mutateAsync(data);
-		console.log(user);
+		await mutateAsync(data);
 	};
 	return (
 		<div className={styles.container}>
@@ -108,15 +105,15 @@ function SignupForm() {
 					<TextField
 						required
 						label="Ressaisir le mot de passe"
-						type={showConfirmPassword ? 'text' : 'password'}
+						type={showPassword ? 'text' : 'password'}
 						InputProps={{
 							endAdornment: (
 								<InputAdornment position="end">
 									<IconButton
-										onClick={handleClickShowConfirmPassword}
+										onClick={handleClickShowPassword}
 										onMouseDown={handleMouseDownPassword}
 									>
-										{showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+										{showPassword ? <VisibilityOff /> : <Visibility />}
 									</IconButton>
 								</InputAdornment>
 							),

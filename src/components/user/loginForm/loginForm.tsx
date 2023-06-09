@@ -5,12 +5,12 @@ import TextField from '@mui/material/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { useCreateUser } from '../../../api/createUser';
+import { useLoginUser } from '../../../api/loginUser';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { passwordRegExp } from '../../../constants/passwordRegExp';
 
-const passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
 const schema = yup
 	.object({
 		email: yup
@@ -42,10 +42,15 @@ function LoginForm() {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-	const { mutateAsync } = useCreateUser();
+	const { mutateAsync } = useLoginUser();
 	const onSubmit = async (data: FormData) => {
-		const user = await mutateAsync(data);
-		console.log(user);
+		const response = await mutateAsync(data);
+		console.log('response login', response);
+		if (response && response.token) {
+			localStorage.setItem('token', response.token);
+			// navigate to main screen
+			// decode token && save user data
+		} else console.log('something went wrong');
 	};
 	return (
 		<div className={styles.container}>
