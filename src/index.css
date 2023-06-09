@@ -17,6 +17,7 @@ body {
 	--color-logo: #414141;
 	--navbar-h: 30px;
 	--footer-h: 120px;
+	--box-shadow: 8px 3px 22px 10px rgba(150, 150, 150, 0.11);
 }
 
 code {
@@ -50,10 +51,10 @@ h3 {
 	height: auto;
 	max-width: 100%;
 	background: white;
-	border: 0px solid white;
+	border: none;
 	font-family: tahoma;
 	line-height: 12.07px;
-	box-shadow: 8px 3px 22px 10px rgba(150, 150, 150, 0.11);
+	box-shadow: var(--box-shadow);
 	border-radius: 16px;
 	padding: 24px;
 }

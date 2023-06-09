@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import styles from './loginForm.module.css';
+import styles from './signupForm.module.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { useLoginUser } from '../../../api/loginUser';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { useCreateUser } from '../../../api/createUser';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
 
 const schema = yup
 	.object({
+		name: yup.string().required('Le Nom et le Prenom sont obligatoires'),
 		email: yup
 			.string()
 			.email('email incorrect')
@@ -21,20 +22,26 @@ const schema = yup
 			.string()
 			.matches(passwordRegExp, 'mot de passe invalide')
 			.required('Votre mot de passe est obligatoire'),
+		confirmPassword: yup
+			.string()
+			.required()
+			.oneOf(
+				[yup.ref('password')],
+				'Les deux mots de passe ne correspondent pas'
+			),
 	})
 	.required();
 type FormData = yup.InferType<typeof schema>;
 
-function LoginForm() {
+function SignupForm() {
 	const [showPassword, setShowPassword] = useState(false);
-
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
-
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => {
 		event.preventDefault();
 	};
+
 	const {
 		register,
 		handleSubmit,
@@ -42,25 +49,28 @@ function LoginForm() {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-	const { mutateAsync } = useLoginUser();
+	const { mutateAsync } = useCreateUser();
 	const onSubmit = async (data: FormData) => {
-		const response = await mutateAsync(data);
-		console.log('response login', response);
-		if (response && response.token) {
-			localStorage.setItem('token', response.token);
-			// navigate to main screen
-			// decode token && save user data
-		} else console.log('something went wrong');
+		await mutateAsync(data);
 	};
 	return (
 		<div className={styles.container}>
 			<div className={styles.title}>
 				<p>
-					Veuillez <b>vous connecter</b>
+					Veuillez <b>créer un compte</b>
 				</p>
 			</div>
 			<form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
 				<div className={styles.input}>
+					<TextField
+						required
+						label="Nom Prenom"
+						placeholder="Nom prenom"
+						variant="standard"
+						{...register('name')}
+						error={Boolean(errors.name)}
+						helperText={errors.name?.message}
+					/>
 					<TextField
 						required
 						label="e-mail"
@@ -79,7 +89,6 @@ function LoginForm() {
 							endAdornment: (
 								<InputAdornment position="end">
 									<IconButton
-										aria-label="toggle password visibility"
 										onClick={handleClickShowPassword}
 										onMouseDown={handleMouseDownPassword}
 									>
@@ -93,23 +102,39 @@ function LoginForm() {
 						error={Boolean(errors.password)}
 						helperText={errors.password?.message}
 					/>
+					<TextField
+						required
+						label="Ressaisir le mot de passe"
+						type={showPassword ? 'text' : 'password'}
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<IconButton
+										onClick={handleClickShowPassword}
+										onMouseDown={handleMouseDownPassword}
+									>
+										{showPassword ? <VisibilityOff /> : <Visibility />}
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
+						variant="standard"
+						{...register('confirmPassword')}
+						error={Boolean(errors.confirmPassword)}
+						helperText={errors.confirmPassword?.message}
+					/>
 				</div>
 				<div className={styles.btn}>
 					<Button type="submit" variant="contained">
-						SE CONNECTER
+						ENREGISTER
 					</Button>
 				</div>
 				<div className={styles.link}>
-					<Link to="/admin/signup">Ou Créer un compte</Link>
-				</div>
-				<div className={styles.link}>
-					<Link to="">
-						Login as a <b>Demo User</b>
-					</Link>
+					<Link to="/admin/login">Ou se connecter</Link>
 				</div>
 			</form>
 		</div>
 	);
 }
 
-export default LoginForm;
+export default SignupForm;

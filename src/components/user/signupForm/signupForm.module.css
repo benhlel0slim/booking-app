@@ -15,7 +15,7 @@
 	padding: 30px;
 	margin: 20px;
 	background: white;
-	border: 0px solid white;
+	border: none;
 	font-family: tahoma;
 	line-height: 12.07px;
 	box-shadow: var(--box-shadow);
@@ -39,7 +39,7 @@
 	cursor: pointer;
 }
 .link a {
-	color: #414141;
+	color: var(--color-text);
 }
 @media screen and (max-width: 400px) {
 	.link {

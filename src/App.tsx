@@ -3,8 +3,8 @@ import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
 import Client from './components/client/client';
 import Layout from './components/layout/layout';
 import Button from '@mui/material/Button';
-import User from './components/user/loginForm/loginForm';
-/* import SignupForm from './components/user/signupForm/signupForm'; */
+import SignupForm from './components/user/signupForm/signupForm';
+import LoginForm from './components/user/loginForm/loginForm';
 
 const router = createBrowserRouter([
 	{
@@ -17,12 +17,12 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'admin/login',
-				element: <User />,
+				element: <LoginForm />,
 			},
-			/* {
+			{
 				path: 'admin/signup',
 				element: <SignupForm />,
-			}, */
+			},
 			{
 				path: '/',
 				element: (
