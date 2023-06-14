@@ -4,7 +4,6 @@ import { useQuery } from 'react-query';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { ReactComponent as NavIcon } from '../../assets/navIcon.svg';
 import styles from './layout.module.css';
-
 import { LinkIcon } from '../linkIcon/linkIcon';
 
 function Layout() {

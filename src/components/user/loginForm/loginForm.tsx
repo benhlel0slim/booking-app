@@ -52,6 +52,7 @@ function LoginForm() {
 			// decode token && save user data
 		} else console.log('something went wrong');
 	};
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.title}>
