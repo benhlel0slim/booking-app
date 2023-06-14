@@ -5,7 +5,6 @@ import {
 	FormControl,
 	InputLabel,
 	MenuItem,
-	OutlinedInput,
 	Select,
 	SelectChangeEvent,
 	TextField,
@@ -16,16 +15,7 @@ import * as yup from 'yup';
 import { useCreateRestaurant } from '../../../api/createRestaurant';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-const days = [
-	'lundi',
-	'mardi',
-	'mercredi',
-	'jeudi',
-	'vendredi',
-	'samedi',
-	'dimanche',
-];
+import { DAYS_OF_WEEK } from '../../../constants/daysOfWeek';
 
 function getStyles(day: string, closedDays: string[], theme: Theme) {
 	return {
@@ -35,6 +25,7 @@ function getStyles(day: string, closedDays: string[], theme: Theme) {
 				: theme.typography.fontWeightMedium,
 	};
 }
+
 const schema = yup
 	.object({
 		name: yup.string().required(),
@@ -47,8 +38,7 @@ const schema = yup
 			open: yup.string().required(),
 			closed: yup.string().required(),
 		}),
-		/* 		menu: yup.array().of(yup.string().required()).required(),
-		 */ closedDays: yup.array().of(yup.string().required()).required(),
+		closedDays: yup.array().of(yup.string().required()).required(),
 	})
 	.required();
 type FormData = yup.InferType<typeof schema>;
@@ -79,12 +69,11 @@ function AddRestaurant() {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-	const menu = ['kafteji', 'mar9a', 'bouza'];
+
 	const { mutateAsync } = useCreateRestaurant();
 	const onSubmit = async (data: FormData) => {
-		const newData = { ...data, menu };
-		await mutateAsync(newData);
-		console.log(newData);
+		await mutateAsync(data);
+		console.log(data);
 	};
 
 	return (
@@ -122,18 +111,16 @@ function AddRestaurant() {
 					error={Boolean(errors.address?.street)}
 					helperText={errors.address?.street?.message}
 				/>
-				<FormControl sx={{ m: 1, width: 200 }}>
+				<FormControl variant="standard" sx={{ m: 1, width: 200 }}>
 					<InputLabel>Jours de fermeture</InputLabel>
 					<Select
-						required
 						multiple
 						value={closedDays}
-						input={<OutlinedInput label="Days" />}
 						{...register('closedDays')}
 						error={Boolean(errors.closedDays)}
 						onChange={handleChangeClosedDays}
 					>
-						{days.map((day, index) => (
+						{DAYS_OF_WEEK.map((day, index) => (
 							<MenuItem
 								key={day}
 								value={(index + 1).toString()}
@@ -144,7 +131,7 @@ function AddRestaurant() {
 						))}
 					</Select>
 				</FormControl>
-				<FormControl sx={{ m: 1, width: 200 }}>
+				<FormControl variant="standard" sx={{ m: 1, width: 200 }}>
 					<InputLabel>Nombre de tables</InputLabel>
 					<Select
 						required

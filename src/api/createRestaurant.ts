@@ -2,14 +2,18 @@ import { useMutation } from 'react-query';
 import { RestaurantData } from '../types/createRestaurantData';
 import { URL_RESTAURANT } from '../constants/api';
 
-export const createRestaurant = async (restaurantData: RestaurantData) => {
-	const endpoint = `${URL_RESTAURANT}/restaurant`;
+export const createRestaurant = async (
+	restaurantData: Omit<RestaurantData, 'menu'>
+) => {
+	const endpoint = `${URL_RESTAURANT}/admin/restaurant`;
+	const token = localStorage.getItem('token');
 	try {
 		const rawResponse = await fetch(endpoint, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(restaurantData),
 		});

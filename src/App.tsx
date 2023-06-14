@@ -25,13 +25,13 @@ const router = createBrowserRouter([
 				element: <SignupForm />,
 			},
 			{
-				path: '/restaurant',
+				path: 'admin/restaurant',
 				element: <AddRestaurant />,
 			},
 			{
 				path: '/',
 				element: (
-					<div className={'demoLink'}>
+					<div className="demoLink">
 						<Link to={'/restaurant/62c1a011e95e96a91dbfd023?step=guest'}>
 							<Button variant="contained">Demo</Button>
 						</Link>
