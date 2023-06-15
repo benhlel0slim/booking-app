@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './loginForm.module.css';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -10,6 +9,9 @@ import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
+import { useSetRecoilState } from 'recoil';
+import AuthToken from '../../../store/authentication';
+import NavigateButton from '../../button.tsx/button';
 
 const schema = yup
 	.object({
@@ -26,6 +28,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 function LoginForm() {
+	const setAuthUserToken = useSetRecoilState(AuthToken);
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -42,12 +45,14 @@ function LoginForm() {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-	const { mutateAsync } = useLoginUser();
+	const { mutateAsync, status } = useLoginUser();
 	const onSubmit = async (data: FormData) => {
 		const response = await mutateAsync(data);
+
 		console.log('response login', response);
 		if (response && response.token) {
-			localStorage.setItem('token', response.token);
+			setAuthUserToken(response.token);
+			/* localStorage.setItem('token', response.token); */
 			// navigate to main screen
 			// decode token && save user data
 		} else console.log('something went wrong');
@@ -96,9 +101,7 @@ function LoginForm() {
 					/>
 				</div>
 				<div className={styles.btn}>
-					<Button type="submit" variant="contained">
-						SE CONNECTER
-					</Button>
+					<NavigateButton title="SE CONNECTER" statu={status} />
 				</div>
 				<div className={styles.link}>
 					<Link to="/admin/signup">Ou Créer un compte</Link>

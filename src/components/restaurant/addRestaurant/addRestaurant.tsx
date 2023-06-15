@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from './addRestaurant.module.css';
 import {
-	Button,
 	FormControl,
 	InputLabel,
 	MenuItem,
@@ -16,6 +15,9 @@ import { useCreateRestaurant } from '../../../api/createRestaurant';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DAYS_OF_WEEK } from '../../../constants/daysOfWeek';
+import NavigateButton from '../../button.tsx/button';
+
+type RestaurantProps = { title: string; boldedTitle: string; btn: string };
 
 function getStyles(day: string, closedDays: string[], theme: Theme) {
 	return {
@@ -43,7 +45,7 @@ const schema = yup
 	.required();
 type FormData = yup.InferType<typeof schema>;
 
-function AddRestaurant() {
+function AddRestaurant({ title, boldedTitle, btn }: RestaurantProps) {
 	const [tables, setTables] = useState('');
 	const handleChangeTables = (event: SelectChangeEvent) => {
 		setTables(event.target.value);
@@ -70,7 +72,7 @@ function AddRestaurant() {
 		resolver: yupResolver(schema),
 	});
 
-	const { mutateAsync } = useCreateRestaurant();
+	const { mutateAsync, status } = useCreateRestaurant();
 	const onSubmit = async (data: FormData) => {
 		await mutateAsync(data);
 		console.log(data);
@@ -80,7 +82,7 @@ function AddRestaurant() {
 		<div className={styles.container}>
 			<div className={styles.title}>
 				<p>
-					Veuillez <b>créer votre resto</b>
+					{title} <b>{boldedTitle}</b>
 				</p>
 			</div>
 			<form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
@@ -172,9 +174,7 @@ function AddRestaurant() {
 					</div>
 				</div>
 				<div className={styles.btn}>
-					<Button type="submit" variant="contained">
-						CREER
-					</Button>
+					<NavigateButton title={btn} statu={status} />
 				</div>
 			</form>
 		</div>

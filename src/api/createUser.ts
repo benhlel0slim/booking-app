@@ -13,8 +13,8 @@ export const createUser = async (userData: UserData) => {
 			},
 			body: JSON.stringify(userData),
 		});
-		const content: UserData = await rawResponse.json();
-		return content;
+		const result: { token: string } = await rawResponse.json();
+		return result;
 	} catch (error) {
 		throw new Error('something went wrong');
 	}

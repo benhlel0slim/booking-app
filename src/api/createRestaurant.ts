@@ -1,12 +1,17 @@
 import { useMutation } from 'react-query';
 import { RestaurantData } from '../types/createRestaurantData';
 import { URL_RESTAURANT } from '../constants/api';
+import { useRecoilValue } from 'recoil';
+import authToken from '../store/authentication';
+
+type Payload = Omit<RestaurantData, 'menu'>;
 
 export const createRestaurant = async (
-	restaurantData: Omit<RestaurantData, 'menu'>
+	restaurantData: Payload,
+	token: string
 ) => {
-	const endpoint = `${URL_RESTAURANT}/admin/restaurant`;
-	const token = localStorage.getItem('token');
+	const endpoint = `${URL_RESTAURANT}/restaurant`;
+	/* const token = localStorage.getItem('token'); */
 	try {
 		const rawResponse = await fetch(endpoint, {
 			method: 'POST',
@@ -17,12 +22,14 @@ export const createRestaurant = async (
 			},
 			body: JSON.stringify(restaurantData),
 		});
-		const content: RestaurantData = await rawResponse.json();
-		return content;
+		const result: RestaurantData = await rawResponse.json();
+		return result;
 	} catch (error) {
 		throw new Error('something went wrong');
 	}
 };
+
 export const useCreateRestaurant = () => {
-	return useMutation(createRestaurant);
+	const token = useRecoilValue(authToken);
+	return useMutation((payload: Payload) => createRestaurant(payload, token));
 };

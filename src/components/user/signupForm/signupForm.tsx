@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import styles from './signupForm.module.css';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUser } from '../../../api/createUser';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
+import NavigateButton from '../../button.tsx/button';
 
 const schema = yup
 	.object({
@@ -34,6 +34,8 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 function SignupForm() {
+	const navigate = useNavigate();
+
 	const [showPassword, setShowPassword] = useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
 	const handleMouseDownPassword = (
@@ -41,7 +43,6 @@ function SignupForm() {
 	) => {
 		event.preventDefault();
 	};
-
 	const {
 		register,
 		handleSubmit,
@@ -49,9 +50,11 @@ function SignupForm() {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-	const { mutateAsync } = useCreateUser();
+	const { mutateAsync, status } = useCreateUser();
 	const onSubmit = async (data: FormData) => {
 		await mutateAsync(data);
+		navigate('/admin/login');
+		// if error don't redirect
 	};
 	return (
 		<div className={styles.container}>
@@ -125,9 +128,7 @@ function SignupForm() {
 					/>
 				</div>
 				<div className={styles.btn}>
-					<Button type="submit" variant="contained">
-						ENREGISTER
-					</Button>
+					<NavigateButton title="ENREGISTER" statu={status} />
 				</div>
 				<div className={styles.link}>
 					<Link to="/admin/login">Ou se connecter</Link>

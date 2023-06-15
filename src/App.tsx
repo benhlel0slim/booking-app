@@ -26,7 +26,23 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'admin/restaurant',
-				element: <AddRestaurant />,
+				element: (
+					<AddRestaurant
+						title="Veuillez"
+						boldedTitle="créer votre resto"
+						btn="CREER"
+					/>
+				),
+			},
+			{
+				path: 'admin/restaurant/:id',
+				element: (
+					<AddRestaurant
+						title="Modifier"
+						boldedTitle=" votre resto"
+						btn="ENREGISTRER"
+					/>
+				),
 			},
 			{
 				path: '/',

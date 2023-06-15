@@ -18,9 +18,8 @@ export const createReservation = async (reservation: Reservation) => {
 			},
 			body: JSON.stringify(reservation),
 		});
-		const content: ReservationData | ReservationError =
-			await rawResponse.json();
-		return content;
+		const result: ReservationData | ReservationError = await rawResponse.json();
+		return result;
 	} catch (error) {
 		throw new Error('something went wrong, the reservation was not sent');
 	}
