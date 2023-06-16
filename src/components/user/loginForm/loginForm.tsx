@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
 import { useSetRecoilState } from 'recoil';
 import AuthToken from '../../../store/authentication';
+import { toast } from 'react-toastify';
 
 const schema = yup
 	.object({
@@ -48,10 +49,17 @@ function LoginForm() {
 	const { mutateAsync } = useLoginUser();
 	const onSubmit = async (data: FormData) => {
 		const response = await mutateAsync(data);
-		if (response && response.token) {
+		if ('cod' in response) {
+			const message = response.message.message;
+			toast(`Erreur, veuillez verifier vos coordonnées ${message ?? ''}`, {
+				position: 'bottom-right',
+				type: 'error',
+				autoClose: 5000,
+			});
+		} else {
 			setAuthToken(response.token);
 			/* localStorage.setItem('token', response.token); */
-		} else console.log('something went wrong');
+		}
 	};
 	return (
 		<div className={styles.container}>
