@@ -3,7 +3,7 @@ import { URL_RESTAURANT } from '../constants/api';
 import { UserData } from '../types/signup';
 import { ResponseWithError } from '../types/error';
 
-export const createUser = async (userData: UserData) => {
+const createUser = async (userData: UserData) => {
 	const endpoint = `${URL_RESTAURANT}/user/signup`;
 	try {
 		const rawResponse = await fetch(endpoint, {

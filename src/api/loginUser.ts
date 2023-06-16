@@ -2,7 +2,7 @@ import { useMutation } from 'react-query';
 import { User } from '../types/user';
 import { URL_RESTAURANT } from '../constants/api';
 
-export const loginUser = async (user: User) => {
+const loginUser = async (user: User) => {
 	const endpoint = `${URL_RESTAURANT}/user/login`;
 	try {
 		const rawResponse = await fetch(endpoint, {
