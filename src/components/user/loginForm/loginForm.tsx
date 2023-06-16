@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
 import { useSetRecoilState } from 'recoil';
 import AuthToken from '../../../store/authentication';
-import NavigateButton from '../../button.tsx/button';
+import NavigateButton from '../../navigateButton.tsx/navigateButton';
 
 const schema = yup
 	.object({

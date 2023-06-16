@@ -7,5 +7,3 @@ export type Error = {
 	message: { message: string };
 };
 export type Response<T> = T | Error;
-
-type Abi = Response<string>;

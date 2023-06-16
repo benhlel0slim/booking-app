@@ -9,7 +9,8 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUser } from '../../../api/createUser';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
-import NavigateButton from '../../button.tsx/button';
+import NavigateButton from '../../navigateButton.tsx/navigateButton';
+import { toast } from 'react-toastify';
 
 const schema = yup
 	.object({
@@ -54,6 +55,13 @@ function SignupForm() {
 	const onSubmit = async (data: FormData) => {
 		await mutateAsync(data);
 		navigate('/admin/login');
+		if (status === 'error') {
+			toast('Something went wrong', {
+				position: 'bottom-right',
+				type: 'error',
+				autoClose: 5000,
+			});
+		}
 		// if error don't redirect
 	};
 	return (

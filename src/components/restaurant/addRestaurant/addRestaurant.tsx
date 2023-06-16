@@ -15,7 +15,7 @@ import { useCreateRestaurant } from '../../../api/createRestaurant';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DAYS_OF_WEEK } from '../../../constants/daysOfWeek';
-import NavigateButton from '../../button.tsx/button';
+import NavigateButton from '../../navigateButton.tsx/navigateButton';
 
 type RestaurantProps = { title: string; boldedTitle: string; btn: string };
 
