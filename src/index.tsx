@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { RecoilRoot } from 'recoil';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
@@ -26,7 +27,9 @@ root.render(
 		<QueryClientProvider client={queryClient}>
 			<ToastContainer />
 			<ThemeProvider theme={theme}>
-				<App />
+				<RecoilRoot>
+					<App />
+				</RecoilRoot>
 			</ThemeProvider>
 		</QueryClientProvider>
 	</React.StrictMode>
