@@ -1,13 +1,13 @@
 import { Reservation, ReservationData } from '../types/reservation';
 import { URL_RESTAURANT } from '../constants/api';
 import { useMutation } from 'react-query';
-import { ReservationError } from '../types/error';
+import { ResponseWithError } from '../types/error';
 
 /**
  * Post reservation data
  * `useMutation`
  */
-export const createReservation = async (reservation: Reservation) => {
+const createReservation = async (reservation: Reservation) => {
 	const endpoint = `${URL_RESTAURANT}/reservation`;
 	try {
 		const rawResponse = await fetch(endpoint, {
@@ -18,7 +18,7 @@ export const createReservation = async (reservation: Reservation) => {
 			},
 			body: JSON.stringify(reservation),
 		});
-		const content: ReservationData | ReservationError =
+		const content: ResponseWithError<ReservationData> =
 			await rawResponse.json();
 		return content;
 	} catch (error) {

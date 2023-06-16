@@ -120,5 +120,5 @@ button.react-calendar__tile.react-calendar__month-view__days__day.red {
 .demoLink {
 	display: flex;
 	justify-content: center;
-	margin: 100px;
+	padding-top: 100px;
 }

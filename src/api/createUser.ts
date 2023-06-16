@@ -1,8 +1,9 @@
 import { useMutation } from 'react-query';
 import { URL_RESTAURANT } from '../constants/api';
 import { UserData } from '../types/signup';
+import { ResponseWithError } from '../types/error';
 
-export const createUser = async (userData: UserData) => {
+const createUser = async (userData: UserData) => {
 	const endpoint = `${URL_RESTAURANT}/user/signup`;
 	try {
 		const rawResponse = await fetch(endpoint, {
@@ -13,8 +14,9 @@ export const createUser = async (userData: UserData) => {
 			},
 			body: JSON.stringify(userData),
 		});
-		const content: UserData = await rawResponse.json();
-		return content;
+		const result: ResponseWithError<{ token: string }> =
+			await rawResponse.json();
+		return result;
 	} catch (error) {
 		throw new Error('something went wrong');
 	}

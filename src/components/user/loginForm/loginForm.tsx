@@ -10,6 +10,9 @@ import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
+import { useSetRecoilState } from 'recoil';
+import AuthToken from '../../../store/authentication';
+import { toast } from 'react-toastify';
 
 const schema = yup
 	.object({
@@ -26,6 +29,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 function LoginForm() {
+	const setAuthToken = useSetRecoilState(AuthToken);
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -45,12 +49,17 @@ function LoginForm() {
 	const { mutateAsync } = useLoginUser();
 	const onSubmit = async (data: FormData) => {
 		const response = await mutateAsync(data);
-		console.log('response login', response);
-		if (response && response.token) {
-			localStorage.setItem('token', response.token);
-			// navigate to main screen
-			// decode token && save user data
-		} else console.log('something went wrong');
+		if ('cod' in response) {
+			const message = response.message.message;
+			toast(`Erreur, veuillez verifier vos coordonnées ${message ?? ''}`, {
+				position: 'bottom-right',
+				type: 'error',
+				autoClose: 5000,
+			});
+		} else {
+			setAuthToken(response.token);
+			/* localStorage.setItem('token', response.token); */
+		}
 	};
 	return (
 		<div className={styles.container}>
