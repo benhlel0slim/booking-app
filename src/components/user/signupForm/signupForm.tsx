@@ -7,9 +7,10 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUser } from '../../../api/createUser';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
+import { toast } from 'react-toastify';
 
 const schema = yup
 	.object({
@@ -34,6 +35,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 function SignupForm() {
+	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
 	const handleMouseDownPassword = (
@@ -51,7 +53,21 @@ function SignupForm() {
 	});
 	const { mutateAsync } = useCreateUser();
 	const onSubmit = async (data: FormData) => {
-		await mutateAsync(data);
+		const res = await mutateAsync(data);
+		if ('cod' in res) {
+			toast('Erreur, veuillez réessayer', {
+				position: 'bottom-right',
+				type: 'error',
+				autoClose: 5000,
+			});
+		} else {
+			toast('Compte créer avec succès', {
+				position: 'bottom-right',
+				type: 'success',
+				autoClose: 5000,
+			});
+			navigate('/admin/login');
+		}
 	};
 	return (
 		<div className={styles.container}>

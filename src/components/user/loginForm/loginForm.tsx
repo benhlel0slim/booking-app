@@ -10,6 +10,8 @@ import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
+import { useSetRecoilState } from 'recoil';
+import AuthToken from '../../../store/authentication';
 
 const schema = yup
 	.object({
@@ -26,6 +28,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 function LoginForm() {
+	const setAuthUserToken = useSetRecoilState(AuthToken);
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -47,9 +50,8 @@ function LoginForm() {
 		const response = await mutateAsync(data);
 		console.log('response login', response);
 		if (response && response.token) {
-			localStorage.setItem('token', response.token);
-			// navigate to main screen
-			// decode token && save user data
+			setAuthUserToken(response.token);
+			/* localStorage.setItem('token', response.token); */
 		} else console.log('something went wrong');
 	};
 	return (
