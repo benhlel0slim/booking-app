@@ -55,7 +55,8 @@ function SignupForm() {
 	const onSubmit = async (data: FormData) => {
 		const res = await mutateAsync(data);
 		if ('cod' in res) {
-			toast('Erreur, veuillez réessayer', {
+			const message = res.message.message;
+			toast(`Erreur, veuillez réessayer ${message ?? ''}`, {
 				position: 'bottom-right',
 				type: 'error',
 				autoClose: 5000,

@@ -28,7 +28,7 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 function LoginForm() {
-	const setAuthUserToken = useSetRecoilState(AuthToken);
+	const setAuthToken = useSetRecoilState(AuthToken);
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -48,9 +48,8 @@ function LoginForm() {
 	const { mutateAsync } = useLoginUser();
 	const onSubmit = async (data: FormData) => {
 		const response = await mutateAsync(data);
-		console.log('response login', response);
 		if (response && response.token) {
-			setAuthUserToken(response.token);
+			setAuthToken(response.token);
 			/* localStorage.setItem('token', response.token); */
 		} else console.log('something went wrong');
 	};
