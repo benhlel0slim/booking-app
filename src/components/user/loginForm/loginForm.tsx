@@ -11,8 +11,9 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
 import { useSetRecoilState } from 'recoil';
-import AuthToken from '../../../store/authentication';
+import { token as AuthToken } from '../../../store/authentication';
 import { toast } from 'react-toastify';
+import { useRedirect } from '../../../hooks/useRedirect';
 
 const schema = yup
 	.object({
@@ -26,6 +27,7 @@ const schema = yup
 			.required('Votre mot de passe est obligatoire'),
 	})
 	.required();
+
 type FormData = yup.InferType<typeof schema>;
 
 function LoginForm() {
@@ -33,12 +35,12 @@ function LoginForm() {
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
-
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => {
 		event.preventDefault();
 	};
+
 	const {
 		register,
 		handleSubmit,
@@ -46,6 +48,7 @@ function LoginForm() {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
+
 	const { mutateAsync } = useLoginUser();
 	const onSubmit = async (data: FormData) => {
 		const response = await mutateAsync(data);
@@ -61,6 +64,9 @@ function LoginForm() {
 			/* localStorage.setItem('token', response.token); */
 		}
 	};
+
+	useRedirect();
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.title}>
@@ -68,6 +74,7 @@ function LoginForm() {
 					Veuillez <b>vous connecter</b>
 				</p>
 			</div>
+
 			<form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
 				<div className={styles.input}>
 					<TextField
@@ -103,14 +110,17 @@ function LoginForm() {
 						helperText={errors.password?.message}
 					/>
 				</div>
+
 				<div className={styles.btn}>
 					<Button type="submit" variant="contained">
 						SE CONNECTER
 					</Button>
 				</div>
+
 				<div className={styles.link}>
 					<Link to="/admin/signup">Ou Créer un compte</Link>
 				</div>
+
 				<div className={styles.link}>
 					<Link to="">
 						Login as a <b>Demo User</b>
