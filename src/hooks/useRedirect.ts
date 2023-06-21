@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { decodedToken } from '../store/authentication';
 import { getRestaurant } from '../api/getRestaurant';
@@ -7,17 +7,21 @@ import { useEffect } from 'react';
 export const useRedirect = () => {
 	const tokenData = useRecoilValue(decodedToken);
 	const navigate = useNavigate();
+	let location = useLocation();
 
 	const redirect = async () => {
 		if (!tokenData) {
-			navigate('/admin/login');
+			if (!location) {
+				navigate('/admin/login');
+			}
 			return;
 		}
 		if (tokenData.restaurants.length === 0) {
-			navigate('/admin/restaurant');
+			if (!location) {
+				navigate('/admin/restaurant');
+			}
 			return;
 		}
-
 		const restaurantId = tokenData.restaurants[0];
 		const restaurant = await getRestaurant(restaurantId);
 
@@ -29,7 +33,6 @@ export const useRedirect = () => {
 			return;
 		}
 	};
-
 	useEffect(() => {
 		redirect();
 	}, []);
