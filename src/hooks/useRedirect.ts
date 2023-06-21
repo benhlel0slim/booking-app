@@ -3,34 +3,40 @@ import { useRecoilValue } from 'recoil';
 import { decodedToken } from '../store/authentication';
 import { getRestaurant } from '../api/getRestaurant';
 import { useEffect } from 'react';
+import { firstRestaurantId } from '../store/selectedRestaurantId';
+import { useQuery } from 'react-query';
 
 export const useRedirect = () => {
 	const tokenData = useRecoilValue(decodedToken);
+	const restaurantId = useRecoilValue(firstRestaurantId);
+	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
+		getRestaurant(restaurantId || '')
+	);
 	const navigate = useNavigate();
 	let location = useLocation();
-
+	console.log(location);
+	console.log(tokenData);
 	const redirect = async () => {
 		if (!tokenData) {
-			if (!location) {
+			if (location.pathname !== '/admin/login') {
 				navigate('/admin/login');
 			}
 			return;
 		}
-		if (tokenData.restaurants.length === 0) {
-			if (!location) {
+		if (!restaurantId) {
+			if (location.pathname !== '/admin/restaurant') {
 				navigate('/admin/restaurant');
 			}
 			return;
 		}
-		const restaurantId = tokenData.restaurants[0];
-		const restaurant = await getRestaurant(restaurantId);
 
-		if (restaurant?.menu.length === 0) {
-			navigate('/admin/restaurant/:id/menu');
+		if (data?.menu.length === 0) {
+			if (location.pathname !== `/admin/restaurant/${restaurantId}/menu`)
+				navigate(`/admin/restaurant/${restaurantId}/menu`);
 			return;
 		} else {
-			navigate('admin/restaurant/:id/reservation');
-			return;
+			if (location.pathname !== `/admin/restaurant/${restaurantId}/reservation`)
+				navigate(`/admin/restaurant/${restaurantId}/reservation`);
 		}
 	};
 	useEffect(() => {
