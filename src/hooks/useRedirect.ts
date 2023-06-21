@@ -14,8 +14,6 @@ export const useRedirect = () => {
 	);
 	const navigate = useNavigate();
 	let location = useLocation();
-	console.log(location);
-	console.log(tokenData);
 	const redirect = async () => {
 		if (!tokenData) {
 			if (location.pathname !== '/admin/login') {
@@ -41,5 +39,5 @@ export const useRedirect = () => {
 	};
 	useEffect(() => {
 		redirect();
-	}, []);
+	}, [restaurantId]);
 };
