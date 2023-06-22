@@ -39,5 +39,5 @@ export const useRedirect = () => {
 	};
 	useEffect(() => {
 		redirect();
-	}, [decodedToken]);
+	}, [tokenData]);
 };
