@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './loginForm.module.css';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -14,6 +13,7 @@ import { useSetRecoilState } from 'recoil';
 import { token as AuthToken } from '../../../store/authentication';
 import { toast } from 'react-toastify';
 import { useRedirect } from '../../../hooks/useRedirect';
+import LoadingButton from '../../loadingButton/loadingButton';
 
 const schema = yup
 	.object({
@@ -33,7 +33,6 @@ type FormData = yup.InferType<typeof schema>;
 function LoginForm() {
 	const setAuthToken = useSetRecoilState(AuthToken);
 	const [showPassword, setShowPassword] = useState(false);
-
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
 	const handleMouseDownPassword = (
 		event: React.MouseEvent<HTMLButtonElement>
@@ -50,6 +49,7 @@ function LoginForm() {
 	});
 
 	const { mutateAsync } = useLoginUser();
+
 	const onSubmit = async (data: FormData) => {
 		const response = await mutateAsync(data);
 		if ('cod' in response) {
@@ -112,9 +112,7 @@ function LoginForm() {
 				</div>
 
 				<div className={styles.btn}>
-					<Button type="submit" variant="contained">
-						SE CONNECTER
-					</Button>
+					<LoadingButton>se connecter</LoadingButton>
 				</div>
 
 				<div className={styles.link}>

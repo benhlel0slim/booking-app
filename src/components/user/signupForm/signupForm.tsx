@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './signupForm.module.css';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -11,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUser } from '../../../api/createUser';
 import { passwordRegExp } from '../../../constants/passwordRegExp';
 import { toast } from 'react-toastify';
+import LoadingButton from '../../loadingButton/loadingButton';
 
 const schema = yup
 	.object({
@@ -142,9 +142,7 @@ function SignupForm() {
 					/>
 				</div>
 				<div className={styles.btn}>
-					<Button type="submit" variant="contained">
-						ENREGISTER
-					</Button>
+					<LoadingButton>s'enregistrer</LoadingButton>
 				</div>
 				<div className={styles.link}>
 					<Link to="/admin/login">Ou se connecter</Link>
