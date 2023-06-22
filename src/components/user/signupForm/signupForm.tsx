@@ -142,7 +142,7 @@ function SignupForm() {
 					/>
 				</div>
 				<div className={styles.btn}>
-					<LoadingButton>ENREGISTRER</LoadingButton>
+					<LoadingButton>s'enregistrer</LoadingButton>
 				</div>
 				<div className={styles.link}>
 					<Link to="/admin/login">Ou se connecter</Link>
