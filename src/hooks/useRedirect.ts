@@ -9,11 +9,14 @@ import { useQuery } from 'react-query';
 export const useRedirect = () => {
 	const tokenData = useRecoilValue(decodedToken);
 	const restaurantId = useRecoilValue(firstRestaurantId);
+
 	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
 		getRestaurant(restaurantId || '')
 	);
+
 	const navigate = useNavigate();
 	let location = useLocation();
+
 	const redirect = async () => {
 		if (!tokenData) {
 			if (location.pathname !== '/admin/login') {
@@ -37,7 +40,8 @@ export const useRedirect = () => {
 				navigate(`/admin/restaurant/${restaurantId}/reservation`);
 		}
 	};
+
 	useEffect(() => {
 		redirect();
-	}, [restaurantId]);
+	}, [tokenData]);
 };
