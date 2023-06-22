@@ -112,7 +112,7 @@ function LoginForm() {
 				</div>
 
 				<div className={styles.btn}>
-					<LoadingButton children="SE CONNECTER" />
+					<LoadingButton>SE CONNECTER</LoadingButton>
 				</div>
 
 				<div className={styles.link}>
