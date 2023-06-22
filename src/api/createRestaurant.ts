@@ -2,14 +2,13 @@ import { useMutation } from 'react-query';
 import { RestaurantData } from '../types/createRestaurant';
 import { URL_RESTAURANT } from '../constants/api';
 import { useRecoilValue } from 'recoil';
-import { decodedToken } from '../store/authentication';
-import { DecodeAuthToken } from '../types/auth';
+import { token } from '../store/authentication';
 
 type Payload = Omit<RestaurantData, 'menu'>;
 
 export const createRestaurant = async (
 	restaurantData: Payload,
-	token: DecodeAuthToken | undefined
+	token: string
 ) => {
 	const endpoint = `${URL_RESTAURANT}/restaurant`;
 	/* const token = localStorage.getItem('token'); */
@@ -31,6 +30,6 @@ export const createRestaurant = async (
 };
 
 export const useCreateRestaurant = () => {
-	const token = useRecoilValue(decodedToken);
-	return useMutation((payload: Payload) => createRestaurant(payload, token));
+	const _token = useRecoilValue(token);
+	return useMutation((payload: Payload) => createRestaurant(payload, _token));
 };
