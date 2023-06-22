@@ -46,10 +46,12 @@ type FormData = yup.InferType<typeof schema>;
 
 function CreateRestaurant() {
 	const [tables, setTables] = useState('');
+
 	const handleChangeTables = (event: SelectChangeEvent) => {
 		setTables(event.target.value);
 	};
 	const theme = useTheme();
+
 	const [closedDays, setclosedDays] = useState<string[]>([]);
 
 	const handleChangeClosedDays = (
@@ -63,6 +65,7 @@ function CreateRestaurant() {
 			typeof value === 'string' ? value.split(',') : value
 		);
 	};
+
 	const {
 		register,
 		handleSubmit,
@@ -74,9 +77,10 @@ function CreateRestaurant() {
 	const { mutateAsync } = useCreateRestaurant();
 	const onSubmit = async (data: FormData) => {
 		await mutateAsync(data);
-		console.log(data);
 	};
+
 	useRedirect();
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.title}>
