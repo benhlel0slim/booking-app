@@ -1,19 +1,19 @@
-import { useMutation } from 'react-query';
-import { RestaurantData } from '../types/createRestaurant';
 import { URL_RESTAURANT } from '../constants/api';
+import { useMutation } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import { token } from '../store/authentication';
+import { RestaurantData } from '../types/createRestaurant';
 import { Payload } from '../types/payload';
 
-export const createRestaurant = async (
+export const editRestaurant = async (
 	restaurantData: Payload,
+	restaurantId: string,
 	token: string
 ) => {
-	const endpoint = `${URL_RESTAURANT}/restaurant`;
-	/* const token = localStorage.getItem('token'); */
+	const endpoint = `${URL_RESTAURANT}/restaurant/${restaurantId}`;
 	try {
 		const rawResponse = await fetch(endpoint, {
-			method: 'POST',
+			method: 'PUT',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -24,11 +24,13 @@ export const createRestaurant = async (
 		const result: RestaurantData = await rawResponse.json();
 		return result;
 	} catch (error) {
-		throw new Error('something went wrong');
+		throw new Error('restaurant not edited');
 	}
 };
 
-export const useCreateRestaurant = () => {
+export const useEditRestaurant = (restaurantId: string) => {
 	const _token = useRecoilValue(token);
-	return useMutation((payload: Payload) => createRestaurant(payload, _token));
+	return useMutation((restaurantData: Payload) =>
+		editRestaurant(restaurantData, _token, restaurantId)
+	);
 };
