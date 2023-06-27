@@ -1,3 +1,3 @@
 import { RestaurantData } from './createRestaurant';
 
-export type Payload = Omit<RestaurantData, 'menu'>;
+export type Payload = Omit<RestaurantData, 'menu' | '_id'>;

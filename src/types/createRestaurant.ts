@@ -9,6 +9,7 @@ export interface Times {
 }
 
 export interface RestaurantData {
+	_id: string;
 	name: string;
 	address: Address;
 	slots: number;

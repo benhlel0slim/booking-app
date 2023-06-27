@@ -8,21 +8,24 @@ import { useRecoilValue } from 'recoil';
 import { firstRestaurantId } from '../../../store/selectedRestaurantId';
 import { useEditRestaurant } from '../../../api/editRestaurant';
 import { CircularProgress } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function EditRestaurant() {
+	const navigate = useNavigate();
 	const restaurantId = useRecoilValue(firstRestaurantId);
 	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
 		getRestaurant(restaurantId || '')
 	);
 
-	const { mutateAsync } = useEditRestaurant(restaurantId || '');
+	const { mutateAsync, isLoading } = useEditRestaurant(restaurantId || '');
 	if (!data)
 		return (
 			<div className={styles.circularProgress}>
 				<CircularProgress />
 			</div>
 		);
-	console.log(data);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.title}>
@@ -30,10 +33,28 @@ function EditRestaurant() {
 					Modifier <b> votre resto</b>
 				</p>
 			</div>
-			<RestaurantForm saveCallback={mutateAsync} defaultValues={data} />
-			<div className={styles.btn}>
-				<LoadingButton>enregistrer</LoadingButton>
-			</div>
+			<RestaurantForm
+				action={
+					<div className={styles.btn}>
+						<LoadingButton isLoading={isLoading}>enregister</LoadingButton>
+					</div>
+				}
+				defaultValues={data}
+				saveCallback={async (Payload) => {
+					const res = await mutateAsync(Payload);
+					if ('cod' in res) {
+						const message = res.message.message;
+						toast(`Erreur, veuillez réessayer ${message ?? ''}`, {
+							position: 'bottom-right',
+							type: 'error',
+							autoClose: 5000,
+						});
+						return;
+					}
+					navigate(`admin/restaurant/${restaurantId}/menu`);
+				}}
+			/>
+			<div className={styles.btn}></div>
 		</div>
 	);
 }

@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { token } from '../store/authentication';
 import { RestaurantData } from '../types/createRestaurant';
 import { Payload } from '../types/payload';
+import { ResponseWithError } from '../types/error';
 
 export const editRestaurant = async (
 	restaurantData: Payload,
@@ -21,7 +22,7 @@ export const editRestaurant = async (
 			},
 			body: JSON.stringify(restaurantData),
 		});
-		const result: RestaurantData = await rawResponse.json();
+		const result: ResponseWithError<RestaurantData> = await rawResponse.json();
 		return result;
 	} catch (error) {
 		throw new Error('restaurant not edited');

@@ -4,6 +4,7 @@ import { URL_RESTAURANT } from '../constants/api';
 import { useRecoilValue } from 'recoil';
 import { token } from '../store/authentication';
 import { Payload } from '../types/payload';
+import { ResponseWithError } from '../types/error';
 
 export const createRestaurant = async (
 	restaurantData: Payload,
@@ -21,7 +22,7 @@ export const createRestaurant = async (
 			},
 			body: JSON.stringify(restaurantData),
 		});
-		const result: RestaurantData = await rawResponse.json();
+		const result: ResponseWithError<RestaurantData> = await rawResponse.json();
 		return result;
 	} catch (error) {
 		throw new Error('something went wrong');

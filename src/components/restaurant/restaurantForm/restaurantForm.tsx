@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import styles from './restaurantForm.module.css';
 import {
 	FormControl,
@@ -14,8 +14,6 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DAYS_OF_WEEK } from '../../../constants/daysOfWeek';
-import { useRedirect } from '../../../hooks/useRedirect';
-import { RestaurantData } from '../../../types/createRestaurant';
 import { Payload } from '../../../types/payload';
 
 function getStyles(day: string, closedDays: string[], theme: Theme) {
@@ -47,22 +45,21 @@ type FormData = yup.InferType<typeof schema>;
 
 type Props = {
 	defaultValues?: Partial<Payload>;
-	saveCallback: (payload: Payload) => Promise<RestaurantData>;
+	saveCallback: (payload: Payload) => void;
+	action: ReactNode;
 };
 
-function RestaurantForm({ saveCallback, defaultValues }: Props) {
+function RestaurantForm({ saveCallback, defaultValues, action }: Props) {
+	const theme = useTheme();
 	const [tables, setTables] = useState(
 		defaultValues?.slots ? String(defaultValues.slots) : ''
+	);
+	const [closedDays, setClosedDays] = useState<string[]>(
+		defaultValues?.closedDays ?? []
 	);
 	const handleChangeTables = (event: SelectChangeEvent) => {
 		setTables(event.target.value);
 	};
-
-	const theme = useTheme();
-
-	const [closedDays, setClosedDays] = useState<string[]>(
-		defaultValues?.closedDays ?? []
-	);
 	const handleChangeClosedDays = (
 		event: SelectChangeEvent<typeof closedDays>
 	) => {
@@ -74,7 +71,6 @@ function RestaurantForm({ saveCallback, defaultValues }: Props) {
 			typeof value === 'string' ? value.split(',') : value
 		);
 	};
-
 	const {
 		register,
 		handleSubmit,
@@ -83,10 +79,9 @@ function RestaurantForm({ saveCallback, defaultValues }: Props) {
 		resolver: yupResolver(schema),
 		defaultValues,
 	});
-	const onSubmit = async (data: FormData) => {
-		await saveCallback(data);
+	const onSubmit = (data: FormData) => {
+		saveCallback(data);
 	};
-	useRedirect();
 
 	return (
 		<form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
@@ -178,6 +173,7 @@ function RestaurantForm({ saveCallback, defaultValues }: Props) {
 					/>
 				</div>
 			</div>
+			{action}
 		</form>
 	);
 }
