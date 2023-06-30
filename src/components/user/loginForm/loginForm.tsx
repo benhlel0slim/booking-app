@@ -8,7 +8,7 @@ import { useLoginUser } from '../../../api/loginUser';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import { passwordRegExp } from '../../../constants/passwordRegExp';
+import { PASSWORD_REG_EXP } from '../../../constants/passwordRegExp';
 import { useSetRecoilState } from 'recoil';
 import { token as AuthToken } from '../../../store/authentication';
 import { toast } from 'react-toastify';
@@ -23,7 +23,7 @@ const schema = yup
 			.required('Votre Email est obligatoire'),
 		password: yup
 			.string()
-			.matches(passwordRegExp, 'mot de passe invalide')
+			.matches(PASSWORD_REG_EXP, 'mot de passe invalide')
 			.required('Votre mot de passe est obligatoire'),
 	})
 	.required();

@@ -8,7 +8,7 @@ import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUser } from '../../../api/createUser';
-import { passwordRegExp } from '../../../constants/passwordRegExp';
+import { PASSWORD_REG_EXP } from '../../../constants/passwordRegExp';
 import { toast } from 'react-toastify';
 import LoadingButton from '../../loadingButton/loadingButton';
 
@@ -21,7 +21,7 @@ const schema = yup
 			.required('Votre Email est obligatoire'),
 		password: yup
 			.string()
-			.matches(passwordRegExp, 'mot de passe invalide')
+			.matches(PASSWORD_REG_EXP, 'mot de passe invalide')
 			.required('Votre mot de passe est obligatoire'),
 		confirmPassword: yup
 			.string()
