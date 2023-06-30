@@ -4,16 +4,14 @@ import LoadingButton from '../../loadingButton/loadingButton';
 import RestaurantForm from '../restaurantForm/restaurantForm';
 import { useQuery } from 'react-query';
 import { getRestaurant } from '../../../api/getRestaurant';
-import { useRecoilValue } from 'recoil';
-import { firstRestaurantId } from '../../../store/selectedRestaurantId';
 import { useEditRestaurant } from '../../../api/editRestaurant';
 import { CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 function EditRestaurant() {
 	const navigate = useNavigate();
-	const restaurantId = useRecoilValue(firstRestaurantId);
+	const { restaurantId } = useParams();
 	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
 		getRestaurant(restaurantId || '')
 	);
@@ -51,7 +49,7 @@ function EditRestaurant() {
 						});
 						return;
 					}
-					navigate(`admin/restaurant/${restaurantId}/menu`);
+					navigate(`admin/restaurant/${restaurantId}/reservation`);
 				}}
 			/>
 			<div className={styles.btn}></div>

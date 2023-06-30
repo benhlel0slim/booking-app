@@ -32,6 +32,6 @@ export const editRestaurant = async (
 export const useEditRestaurant = (restaurantId: string) => {
 	const _token = useRecoilValue(token);
 	return useMutation((restaurantData: Payload) =>
-		editRestaurant(restaurantData, _token, restaurantId)
+		editRestaurant(restaurantData, restaurantId, _token)
 	);
 };
