@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import SignupForm from './components/user/signupForm/signupForm';
 import LoginForm from './components/user/loginForm/loginForm';
 import CreateRestaurant from './components/restaurant/createRestaurant/createRestaurant';
+import EditRestaurant from './components/restaurant/editRestaurant/editRestaurant';
 
 const router = createBrowserRouter([
 	{
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
 			{
 				path: 'admin/restaurant',
 				element: <CreateRestaurant />,
+			},
+			{
+				path: 'admin/restaurant/:restaurantId/edit',
+				element: <EditRestaurant />,
 			},
 			{
 				path: '/',

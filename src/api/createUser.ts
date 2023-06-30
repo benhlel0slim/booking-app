@@ -21,6 +21,7 @@ const createUser = async (userData: UserData) => {
 		throw new Error('something went wrong');
 	}
 };
+
 export const useCreateUser = () => {
 	return useMutation(createUser);
 };

@@ -12,7 +12,13 @@ function LoadingButton({
 	...rest
 }: LoadingButtonProps) {
 	return (
-		<Button type="submit" variant="contained" {...rest} disabled={isLoading}>
+		<Button
+			style={{ minHeight: 38, minWidth: 135 }}
+			type="submit"
+			variant="contained"
+			{...rest}
+			disabled={isLoading}
+		>
 			{isLoading ? <CircularProgress size="1em" /> : children}
 		</Button>
 	);
