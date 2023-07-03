@@ -3,7 +3,7 @@ import { Calendar } from '../calendar/calendar';
 import { Condition } from '../condition/condition';
 import { Confirmation } from '../confirmation/confirmation';
 import { Guest } from '../guest/guest';
-import { Menu } from '../menu/menu';
+import { Menu } from '../menu/clientMenu/clientMenu';
 import { Reservation } from '../reservation/reservation';
 import { useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';

@@ -35,7 +35,7 @@ function CreateRestaurant() {
 						return;
 					}
 					const { _id } = res;
-					navigate(`admin/restaurant/${_id}/menu`);
+					navigate(`${_id}/menu`);
 				}}
 			/>
 		</div>
