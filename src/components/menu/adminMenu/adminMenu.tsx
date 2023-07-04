@@ -90,8 +90,6 @@ function AdminMenu() {
 				<CircularProgress />
 			</div>
 		);
-	console.log(menus);
-	console.log(menu);
 
 	return (
 		<div className={styles.container}>
