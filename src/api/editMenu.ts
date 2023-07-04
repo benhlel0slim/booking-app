@@ -4,12 +4,13 @@ import { ResponseWithError } from '../types/error';
 import { URL_RESTAURANT } from '../constants/api';
 import { useRecoilValue } from 'recoil';
 import { token } from '../store/authentication';
+import { RestaurantData } from '../types/createRestaurant';
 
 const editMenu = async (menu: Menu, restaurantId: string, token: string) => {
 	const endpoint = `${URL_RESTAURANT}/restaurant/${restaurantId}`;
 	try {
 		const rawResponse = await fetch(endpoint, {
-			method: 'POST',
+			method: 'PUT',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -17,10 +18,10 @@ const editMenu = async (menu: Menu, restaurantId: string, token: string) => {
 			},
 			body: JSON.stringify(menu),
 		});
-		const content: ResponseWithError<Menu> = await rawResponse.json();
+		const content: ResponseWithError<RestaurantData> = await rawResponse.json();
 		return content;
 	} catch (error) {
-		throw new Error('something went wrong, the reservation was not sent');
+		throw new Error('something went wrong, the menu was not sent');
 	}
 };
 

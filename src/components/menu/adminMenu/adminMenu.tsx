@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './adminMenu.module.css';
 import {
 	Chip,
+	CircularProgress,
 	FormControl,
 	InputLabel,
 	MenuItem,
@@ -16,7 +17,6 @@ import { useQuery } from 'react-query';
 import { getRestaurant } from '../../../api/getRestaurant';
 import LoadingButton from '../../loadingButton/loadingButton';
 import { useEditMenu } from '../../../api/editMenu';
-import { Menu } from '../../../types/payload';
 import { toast } from 'react-toastify';
 
 function getStyles(item: string, menus: string[], theme: Theme) {
@@ -36,12 +36,15 @@ function AdminMenu() {
 	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
 		getRestaurant(restaurantId || '')
 	);
+
 	const { menu } = data ?? {};
 
-	const initMenu = menu?.map((x) => x) || [];
+	const initMenu = menu || [];
 
 	const [menus, setMenus] = useState<string[]>(initMenu);
 	const [item, setItem] = useState('');
+
+	const { mutateAsync, isLoading } = useEditMenu(restaurantId || '');
 
 	const handleChangeItem = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setItem(e.target.value);
@@ -62,10 +65,9 @@ function AdminMenu() {
 		});
 	};
 
-	const { mutateAsync, isLoading } = useEditMenu(restaurantId || '');
-
-	const onSubmit = async (data: Menu) => {
-		const res = await mutateAsync(data);
+	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const res = await mutateAsync({ menu: menus });
 		if ('cod' in res) {
 			const message = res.message.message;
 			toast(`Erreur, veuillez réessayer ${message ?? ''}`, {
@@ -76,9 +78,18 @@ function AdminMenu() {
 			return;
 		}
 		const { _id } = res;
-		navigate(`${_id}/reservation`);
+		navigate(`/admin/restaurant/${_id}/reservation`);
 	};
+	useEffect(() => {
+		setMenus(menu || []);
+	}, [menu]);
 
+	if (!data)
+		return (
+			<div className={styles.circularProgress}>
+				<CircularProgress />
+			</div>
+		);
 	console.log(menus);
 	console.log(menu);
 
@@ -89,7 +100,7 @@ function AdminMenu() {
 					Veuillez ajouter <b>vos menus</b>
 				</p>
 			</div>
-			<form className={styles.forms} onSubmit={() => onSubmit}>
+			<form className={styles.forms} onSubmit={onSubmit}>
 				<Typography>
 					Écrivez le menu, puis, cliquez sur la touche “entrée” pour ajouter le
 					menu à la liste. Enregistrer le menu quand vous êtes satisfait. Pour
