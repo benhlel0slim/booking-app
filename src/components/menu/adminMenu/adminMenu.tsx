@@ -6,16 +6,18 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
-	SelectChangeEvent,
 	TextField,
 	Theme,
 	Typography,
 	useTheme,
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getRestaurant } from '../../../api/getRestaurant';
 import LoadingButton from '../../loadingButton/loadingButton';
+import { useEditMenu } from '../../../api/editMenu';
+import { Menu } from '../../../types/payload';
+import { toast } from 'react-toastify';
 
 function getStyles(item: string, menus: string[], theme: Theme) {
 	return {
@@ -27,26 +29,19 @@ function getStyles(item: string, menus: string[], theme: Theme) {
 }
 
 function AdminMenu() {
-	const theme = useTheme();
 	const { restaurantId } = useParams();
+	const navigate = useNavigate();
+	const theme = useTheme();
+
 	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
 		getRestaurant(restaurantId || '')
 	);
 	const { menu } = data ?? {};
-	console.log(menu);
 
+	const initMenu = menu?.map((x) => x) || [];
+
+	const [menus, setMenus] = useState<string[]>(initMenu);
 	const [item, setItem] = useState('');
-	const [menus, setMenus] = useState<string[]>([]);
-
-	const handleChangeMenus = (event: SelectChangeEvent<typeof menus>) => {
-		const {
-			target: { value },
-		} = event;
-		setMenus(
-			// On autofill we get a stringified value.
-			typeof value === 'string' ? value.split(',') : value
-		);
-	};
 
 	const handleChangeItem = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setItem(e.target.value);
@@ -56,9 +51,36 @@ function AdminMenu() {
 		if (event.key === 'Enter' && item.trim() !== '') {
 			setMenus([...menus, item]);
 			setItem('');
-			console.log('entrer');
 		}
 	};
+
+	const handleDeleteChip = (index: number) => {
+		setMenus((prevMenus) => {
+			const updatedMenus = [...prevMenus];
+			updatedMenus.splice(index, 1);
+			return updatedMenus;
+		});
+	};
+
+	const { mutateAsync, isLoading } = useEditMenu(restaurantId || '');
+
+	const onSubmit = async (data: Menu) => {
+		const res = await mutateAsync(data);
+		if ('cod' in res) {
+			const message = res.message.message;
+			toast(`Erreur, veuillez réessayer ${message ?? ''}`, {
+				position: 'bottom-right',
+				type: 'error',
+				autoClose: 5000,
+			});
+			return;
+		}
+		const { _id } = res;
+		navigate(`${_id}/reservation`);
+	};
+
+	console.log(menus);
+	console.log(menu);
 
 	return (
 		<div className={styles.container}>
@@ -67,7 +89,7 @@ function AdminMenu() {
 					Veuillez ajouter <b>vos menus</b>
 				</p>
 			</div>
-			<form className={styles.forms}>
+			<form className={styles.forms} onSubmit={() => onSubmit}>
 				<Typography>
 					Écrivez le menu, puis, cliquez sur la touche “entrée” pour ajouter le
 					menu à la liste. Enregistrer le menu quand vous êtes satisfait. Pour
@@ -76,22 +98,20 @@ function AdminMenu() {
 
 				<FormControl variant="standard" sx={{ m: 1, width: 200 }}>
 					<InputLabel>Menus</InputLabel>
-					<Select
-						label="Menus"
-						multiple
-						value={menus}
-						onChange={handleChangeMenus}
-					>
-						{menu &&
-							menu.map((item, index) => (
-								<MenuItem
-									key={index}
-									value={item}
-									style={getStyles(item, menus, theme)}
-								>
-									{item}
-								</MenuItem>
-							))}
+					<Select label="Menus" multiple value={menus}>
+						{menus?.map((item, index) => (
+							<MenuItem
+								key={index}
+								value={item}
+								style={getStyles(item, menus, theme)}
+							>
+								<Chip
+									variant="outlined"
+									label={item}
+									onDelete={() => handleDeleteChip(index)}
+								/>
+							</MenuItem>
+						))}
 					</Select>
 
 					<TextField
@@ -104,8 +124,7 @@ function AdminMenu() {
 					/>
 				</FormControl>
 				<div className={styles.btn}>
-					{/* 					<LoadingButton>Enregistrer</LoadingButton>
-					 */}{' '}
+					<LoadingButton isLoading={isLoading}>Enregistrer</LoadingButton>
 				</div>
 			</form>
 		</div>
