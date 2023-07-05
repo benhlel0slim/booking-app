@@ -112,7 +112,7 @@ function RestaurantForm({ saveCallback, defaultValues, action }: Props) {
 				error={Boolean(errors.address?.street)}
 				helperText={errors.address?.street?.message}
 			/>
-			<FormControl variant="standard" sx={{ m: 1, width: 200 }}>
+			<FormControl variant="standard">
 				<InputLabel>Jours de fermeture</InputLabel>
 				<Select
 					label="Jours de fermeture"
@@ -133,7 +133,7 @@ function RestaurantForm({ saveCallback, defaultValues, action }: Props) {
 					))}
 				</Select>
 			</FormControl>
-			<FormControl variant="standard" sx={{ m: 1, width: 200 }}>
+			<FormControl variant="standard">
 				<InputLabel>Nombre de tables</InputLabel>
 				<Select
 					required
@@ -150,28 +150,27 @@ function RestaurantForm({ saveCallback, defaultValues, action }: Props) {
 				</Select>
 			</FormControl>
 			<div className={styles.inputs}>
-				<div className={styles.ouverture}>
-					<TextField
-						required
-						label="Ouverture"
-						type="time"
-						variant="standard"
-						{...register('times.open')}
-						error={Boolean(errors.times?.open)}
-						helperText={errors.times?.open?.message}
-					/>
-				</div>
-				<div className={styles.fermeture}>
-					<TextField
-						required
-						label="Fermeture"
-						type="time"
-						variant="standard"
-						{...register('times.closed')}
-						error={Boolean(errors.times?.closed)}
-						helperText={errors.times?.closed?.message}
-					/>
-				</div>
+				<TextField
+					required
+					label="Ouverture"
+					type="time"
+					variant="standard"
+					{...register('times.open')}
+					error={Boolean(errors.times?.open)}
+					helperText={errors.times?.open?.message}
+					InputLabelProps={{ shrink: true }}
+				/>
+
+				<TextField
+					required
+					label="Fermeture"
+					type="time"
+					variant="standard"
+					{...register('times.closed')}
+					error={Boolean(errors.times?.closed)}
+					helperText={errors.times?.closed?.message}
+					InputLabelProps={{ shrink: true }}
+				/>
 			</div>
 			{action}
 		</form>
