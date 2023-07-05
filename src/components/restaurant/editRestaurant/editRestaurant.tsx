@@ -52,7 +52,6 @@ function EditRestaurant() {
 					navigate(`/admin/restaurant/${restaurantId}/reservation`);
 				}}
 			/>
-			<div className={styles.btn}></div>
 		</div>
 	);
 }

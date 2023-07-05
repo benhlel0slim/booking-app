@@ -52,6 +52,7 @@ function AdminMenu() {
 
 	const addItem = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter' && item.trim() !== '') {
+			event.preventDefault();
 			setMenus([...menus, item]);
 			setItem('');
 		}
@@ -99,13 +100,15 @@ function AdminMenu() {
 				</p>
 			</div>
 			<form className={styles.forms} onSubmit={onSubmit}>
-				<Typography>
-					Écrivez le menu, puis, cliquez sur la touche “entrée” pour ajouter le
-					menu à la liste. Enregistrer le menu quand vous êtes satisfait. Pour
-					enlever un item, cliquer sur la croix dans la liste
-				</Typography>
-
-				<FormControl variant="standard" sx={{ m: 1, width: 200 }}>
+				<div className={styles.text}>
+					<Typography>
+						Écrivez le menu, puis, cliquez sur la touche “entrée”
+						<br /> pour ajouter le menu à la liste.
+						<br /> Enregistrer le menu quand vous êtes satisfait.
+						<br /> Pour enlever un item, cliquer sur la croix dans la liste.
+					</Typography>
+				</div>
+				<FormControl variant="standard" sx={{ width: 200 }}>
 					<InputLabel>Menus</InputLabel>
 					<Select label="Menus" multiple value={menus}>
 						{menus?.map((item, index) => (
@@ -122,16 +125,16 @@ function AdminMenu() {
 							</MenuItem>
 						))}
 					</Select>
-
-					<TextField
-						label="Ajouter menu"
-						placeholder="Ajouter un menu"
-						variant="standard"
-						value={item}
-						onKeyDown={addItem}
-						onChange={handleChangeItem}
-					/>
 				</FormControl>
+				<TextField
+					label="Ajouter menu"
+					placeholder="Ajouter un menu"
+					variant="standard"
+					value={item}
+					onKeyDown={addItem}
+					onChange={handleChangeItem}
+				/>
+
 				<div className={styles.btn}>
 					<LoadingButton isLoading={isLoading}>Enregistrer</LoadingButton>
 				</div>
