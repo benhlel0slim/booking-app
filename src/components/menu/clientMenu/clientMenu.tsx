@@ -1,15 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { getRestaurant } from '../../api/getRestaurant';
+import { getRestaurant } from '../../../api/getRestaurant';
 import { useState } from 'react';
-import styles from './menu.module.css';
+import styles from './clientMenu.module.css';
 import Button from '@mui/material/Button';
 import { useSearchParams } from 'react-router-dom';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
+import { getKeyValuesFromUrlSearchParam } from '../../../utils/searchParams';
 
 export function Menu() {
 	const { restaurantId } = useParams();

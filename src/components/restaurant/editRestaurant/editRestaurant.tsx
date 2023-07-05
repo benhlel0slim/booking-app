@@ -49,10 +49,9 @@ function EditRestaurant() {
 						});
 						return;
 					}
-					navigate(`admin/restaurant/${restaurantId}/reservation`);
+					navigate(`/admin/restaurant/${restaurantId}/reservation`);
 				}}
 			/>
-			<div className={styles.btn}></div>
 		</div>
 	);
 }

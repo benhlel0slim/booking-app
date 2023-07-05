@@ -4,6 +4,7 @@
 	align-items: center;
 	padding-top: 20px;
 }
+
 .title {
 	font-size: 30px;
 	padding: 30px;
@@ -21,28 +22,18 @@
 	box-shadow: var(--box-shadow);
 	border-radius: 16px;
 }
-.input {
-	display: flex;
-	flex-direction: column;
-	padding: 0px 15px 0px;
-	margin: 0px 15px 20px;
-	gap: 6px;
-}
 .btn {
 	display: flex;
 	justify-content: center;
 	margin: 10px;
-}
-.link {
 	padding: 10px;
-	margin: 10px;
-	cursor: pointer;
 }
-.link a {
-	color: #414141;
+.circularProgress {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 50px;
 }
-@media screen and (max-width: 400px) {
-	.link {
-		font-size: 12px;
-	}
+.text {
+	padding-bottom: 20px;
 }

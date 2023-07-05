@@ -7,6 +7,7 @@ import SignupForm from './components/user/signupForm/signupForm';
 import LoginForm from './components/user/loginForm/loginForm';
 import CreateRestaurant from './components/restaurant/createRestaurant/createRestaurant';
 import EditRestaurant from './components/restaurant/editRestaurant/editRestaurant';
+import AdminMenu from './components/menu/adminMenu/adminMenu';
 
 const router = createBrowserRouter([
 	{
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
 			{
 				path: 'admin/restaurant/:restaurantId/edit',
 				element: <EditRestaurant />,
+			},
+			{
+				path: `/admin/restaurant/:restaurantId/menu`,
+				element: <AdminMenu />,
 			},
 			{
 				path: '/',
