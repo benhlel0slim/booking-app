@@ -22,7 +22,7 @@
 }
 .input {
 	display: flex;
-	gap: 6px;
+	gap: 12px;
 
 	flex-direction: column;
 	padding: 0px 15px 0px;
