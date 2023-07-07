@@ -8,6 +8,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RecoilRoot } from 'recoil';
+import 'react-calendar-timeline/lib/Timeline.css';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement

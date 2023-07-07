@@ -5,8 +5,8 @@ import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useCreateReservation } from '../../api/createReservation';
-import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
+import { useCreateReservation } from '../../../api/createReservation';
+import { getKeyValuesFromUrlSearchParam } from '../../../utils/searchParams';
 import { toast } from 'react-toastify';
 
 const phoneRegExp =
