@@ -1,16 +1,16 @@
 import styles from './adminReservation.module.css';
 import LoadingButton from '../../loadingButton/loadingButton';
 import 'react-calendar-timeline/lib/Timeline.css';
-import moment from 'moment';
 import Timeline from 'react-calendar-timeline';
 import { useParams } from 'react-router-dom';
-import { getAllRestaurantReservations } from '../../../api/getAllRestaurantReservations';
+import { getAllRestaurantReservations } from '../../../api/getReservations';
 import { useRecoilValue } from 'recoil';
 import { token } from '../../../store/authentication';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useQuery } from 'react-query';
 import { getRestaurant } from '../../../api/getRestaurant';
 import dayjs from 'dayjs';
+import { maxDate } from '../../../constants/maxDate';
 
 function AdminReservation() {
 	const { restaurantId } = useParams();
@@ -33,8 +33,6 @@ function AdminReservation() {
 	const groups = Array(restaurant?.slots || 0)
 		.fill('')
 		.map((_, i) => ({ id: i + 1, title: `Table  ${i + 1}` }));
-
-	console.log(groups);
 
 	const items = reservations.map(
 		({ startDate, _id: id, endDate, name: title, group }) => {
@@ -62,8 +60,8 @@ function AdminReservation() {
 				<Timeline
 					groups={groups}
 					items={items}
-					defaultTimeStart={moment().add(-12, 'hour')}
-					defaultTimeEnd={moment().add(12, 'hour')}
+					defaultTimeStart={new Date()}
+					defaultTimeEnd={new Date(maxDate)}
 				></Timeline>
 			</div>
 		</div>

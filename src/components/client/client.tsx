@@ -20,7 +20,7 @@ function Client() {
 	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
 		getRestaurant(restaurantId || '')
 	);
-	console.log(data);
+
 	useEffect(() => {
 		if (!step) setSearchParams({ step: 'guest' });
 	}, [setSearchParams, step]);

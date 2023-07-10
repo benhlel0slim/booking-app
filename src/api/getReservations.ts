@@ -17,6 +17,6 @@ export const getAllRestaurantReservations = async (
 			return result;
 		}
 	} catch (error) {
-		throw new Error('no restaurants found');
+		throw new Error('no reservations found');
 	}
 };
