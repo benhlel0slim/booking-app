@@ -8,6 +8,7 @@ import LoginForm from './components/user/loginForm/loginForm';
 import CreateRestaurant from './components/restaurant/createRestaurant/createRestaurant';
 import EditRestaurant from './components/restaurant/editRestaurant/editRestaurant';
 import AdminMenu from './components/menu/adminMenu/adminMenu';
+import AdminReservation from './components/reservation/adminReservation/adminReservation';
 
 const router = createBrowserRouter([
 	{
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
 			{
 				path: `/admin/restaurant/:restaurantId/menu`,
 				element: <AdminMenu />,
+			},
+			{
+				path: `/admin/restaurant/:restaurantId/reservation`,
+				element: <AdminReservation />,
 			},
 			{
 				path: '/',

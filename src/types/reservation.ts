@@ -25,7 +25,4 @@ export interface ReservationData {
 	restaurant: string;
 	guests: number;
 	_id: string;
-	createdAt: Date;
-	updatedAt: Date;
-	__v: number;
 }

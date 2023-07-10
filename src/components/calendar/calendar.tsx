@@ -10,26 +10,27 @@ import MenuItem from '@mui/material/MenuItem';
 import { getKeyValuesFromUrlSearchParam } from '../../utils/searchParams';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { maxDate } from '../../constants/maxDate';
 
 const today = new Date();
 const year = today.getFullYear();
 const month = today.getMonth();
-const maxDate = new Date().setMonth(new Date().getMonth() + 3, 0);
 const months = [month, month + 1, month + 2];
 
 export function Calendar() {
+	const { restaurantId } = useParams();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const durationInit = searchParams.get('duration');
 	const dayInit = searchParams.get('day');
 	const monthInit = searchParams.get('month');
 	const yearInit = searchParams.get('year');
+
 	const [date, setDate] = useState(
 		dayInit && monthInit && yearInit
 			? new Date(Number(yearInit), Number(monthInit), Number(dayInit))
 			: new Date()
 	);
 	const [type, setType] = useState(durationInit || 'short');
-	const { restaurantId } = useParams();
 
 	const onNextPage = (time: string) => {
 		setSearchParams({
