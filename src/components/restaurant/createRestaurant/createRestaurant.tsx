@@ -3,11 +3,11 @@ import styles from './createRestaurant.module.css';
 import LoadingButton from '../../loadingButton/loadingButton';
 import RestaurantForm from '../restaurantForm/restaurantForm';
 import { useCreateRestaurant } from '../../../api/createRestaurant';
-import { useRedirect } from '../../../hooks/useRedirect';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function CreateRestaurant() {
-	const navigate = useRedirect();
+	const navigate = useNavigate();
 	const { mutateAsync, isLoading } = useCreateRestaurant();
 
 	return (

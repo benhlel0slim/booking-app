@@ -16,9 +16,10 @@ import ReservationForm from '../reservationForm/reservationForm';
 import { toast } from 'react-toastify';
 import { useCreateRestaurantReservation } from '../../../api/createAdminReservation';
 import { Event } from '../../../types/event';
+import { useRedirect } from '../../../hooks/useRedirect';
 
 const style = {
-	position: 'absolute' as 'absolute',
+	position: 'absolute',
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
@@ -41,6 +42,8 @@ function AdminReservation() {
 
 	const { mutateAsync, isLoading } = useCreateRestaurantReservation();
 	const _token = useRecoilValue(token);
+
+	useRedirect();
 
 	if (!reservations) {
 		return (
@@ -107,6 +110,7 @@ function AdminReservation() {
 					items={items}
 					defaultTimeStart={new Date()}
 					defaultTimeEnd={dayjs().add(7, 'day').toDate()}
+					canMove={false}
 				></Timeline>
 			</div>
 		</div>

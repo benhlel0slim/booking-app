@@ -173,14 +173,11 @@ function ReservationForm({
 					{...register('guests')}
 					error={Boolean(errors.guests)}
 				>
-					<MenuItem value={1}>un</MenuItem>
-					<MenuItem value={2}>deux</MenuItem>
-					<MenuItem value={3}>trois</MenuItem>
-					<MenuItem value={4}>quatre</MenuItem>
-					<MenuItem value={5}>cinq</MenuItem>
-					<MenuItem value={6}>six</MenuItem>
-					<MenuItem value={7}>sept</MenuItem>
-					<MenuItem value={8}>huit</MenuItem>
+					{Array.from({ length: 8 }, (_, i) => i + 1).map((value) => (
+						<MenuItem key={value} value={value}>
+							{value}
+						</MenuItem>
+					))}
 				</Select>
 			</FormControl>
 			{action}
