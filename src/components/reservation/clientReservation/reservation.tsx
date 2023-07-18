@@ -8,9 +8,8 @@ import * as yup from 'yup';
 import { useCreateReservation } from '../../../api/createReservation';
 import { getKeyValuesFromUrlSearchParam } from '../../../utils/searchParams';
 import { toast } from 'react-toastify';
+import { PHONE_REG_EXP } from '../../../constants/phoneRegExp';
 
-const phoneRegExp =
-	/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const schema = yup
 	.object({
 		name: yup.string().required('Le Nom et le Prenom sont obligatoires'),
@@ -20,7 +19,7 @@ const schema = yup
 			.required('Votre Email est obligatoire'),
 		phone: yup
 			.string()
-			.matches(phoneRegExp, 'Numero incorrect')
+			.matches(PHONE_REG_EXP, 'Numero incorrect')
 			.required('Votre numero est obligatoire'),
 	})
 	.required();
