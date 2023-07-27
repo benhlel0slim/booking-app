@@ -3,11 +3,11 @@ import { useMutation } from 'react-query';
 import { ResponseWithError } from '../types/error';
 import { useRecoilValue } from 'recoil';
 import { token } from '../store/authentication';
-import { Event } from '../types/event';
+import { CreateEvent } from '../types/event';
 import { ReservationData } from '../types/reservation';
 
 const createRestaurantReservation = async (
-	reservation: Event,
+	reservation: CreateEvent,
 	token: string
 ) => {
 	const endpoint = `${URL_RESTAURANT}/event`;
@@ -31,7 +31,7 @@ const createRestaurantReservation = async (
 
 export const useCreateRestaurantReservation = () => {
 	const _token = useRecoilValue(token);
-	return useMutation((adminReservation: Event) =>
+	return useMutation((adminReservation: CreateEvent) =>
 		createRestaurantReservation(adminReservation, _token)
 	);
 };

@@ -15,9 +15,10 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getRestaurant } from '../../../api/getRestaurant';
 import dayjs from 'dayjs';
-import { Event } from '../../../types/event';
+import { CreateEvent } from '../../../types/event';
 import { PHONE_REG_EXP } from '../../../constants/phoneRegExp';
-import { DateTimeField, LocalizationProvider } from '@mui/x-date-pickers';
+import { DateTimeField } from '@mui/x-date-pickers/DateTimeField';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const schema = yup
@@ -32,7 +33,8 @@ const schema = yup
 			.matches(PHONE_REG_EXP, 'Numero incorrect')
 			.required('Votre numero est obligatoire'),
 		startDate: yup.date().required(),
-		duration: yup.string().required(),
+		endDate: yup.date(),
+		duration: yup.string(),
 		menu: yup.string().required(),
 		guests: yup.number().required(),
 	})
@@ -41,15 +43,17 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 type Props = {
-	saveCallback: (adminReservation: Event) => void;
-	defaultValues?: Partial<Event>;
+	saveCallback: (adminReservation: CreateEvent) => void;
+	defaultValues?: Partial<CreateEvent>;
 	action: ReactNode;
+	title: ReactNode;
 };
 
 function ReservationForm({
-	defaultValues = { guests: 1 },
+	defaultValues,
 	action,
 	saveCallback,
+	title,
 }: Props) {
 	const { restaurantId } = useParams();
 	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
@@ -81,6 +85,7 @@ function ReservationForm({
 			...data,
 			restaurant: restaurantId,
 			time: dayjs(data.startDate).format('HH:mm'),
+			duration: data.duration || 'court',
 		});
 	};
 
@@ -93,9 +98,7 @@ function ReservationForm({
 
 	return (
 		<form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
-			<p className={styles.title}>
-				Nouvelle <b>resérvation</b>
-			</p>
+			{title}
 			<TextField
 				required
 				label="Nom Prenom"
@@ -138,47 +141,89 @@ function ReservationForm({
 								InputLabelProps={{ shrink: true }}
 								{...field}
 								onChange={(value) => field.onChange(value)}
+								value={dayjs(field.value)}
 							/>
 						</LocalizationProvider>
 					);
 				}}
 			/>
-			<FormControl variant="standard">
-				<InputLabel shrink={true}>Durée</InputLabel>
-				<Select
-					required
-					label="durée"
-					{...register('duration')}
-					error={Boolean(errors.duration)}
-				>
-					<MenuItem value="short">Court</MenuItem>
-					<MenuItem value="long">Long</MenuItem>
-				</Select>
-			</FormControl>
+			{defaultValues ? (
+				<Controller
+					control={control}
+					name="endDate"
+					render={({ field }) => {
+						return (
+							<LocalizationProvider dateAdapter={AdapterDayjs}>
+								<DateTimeField
+									required
+									label="jour de reservation et horaire"
+									variant="standard"
+									helperText={errors.endDate?.message}
+									InputLabelProps={{ shrink: true }}
+									{...field}
+									onChange={(value) => field.onChange(value)}
+									value={dayjs(field.value)}
+								/>
+							</LocalizationProvider>
+						);
+					}}
+				/>
+			) : (
+				<FormControl variant="standard">
+					<InputLabel shrink={true}>Durée</InputLabel>
+					<Select
+						required
+						label="durée"
+						{...register('duration')}
+						error={Boolean(errors.duration)}
+					>
+						<MenuItem value="short">Court</MenuItem>
+						<MenuItem value="long">Long</MenuItem>
+					</Select>
+				</FormControl>
+			)}
 			<FormControl variant="standard">
 				<InputLabel>Menus</InputLabel>
-				<Select
-					aria-label="Menu for the restaurant"
-					{...register('menu')}
-					error={Boolean(errors.menu)}
-				>
-					{menuList}
-				</Select>
+				<Controller
+					control={control}
+					name="menu"
+					render={({ field }) => {
+						return (
+							<Select
+								aria-label="Menu for the restaurant"
+								error={Boolean(errors.menu)}
+								{...field}
+								onChange={(e) => field.onChange(e.target.value)}
+							>
+								{menuList}
+							</Select>
+						);
+					}}
+				/>
 			</FormControl>
 			<FormControl variant="standard">
 				<InputLabel>Nombre d'invités</InputLabel>
-				<Select
-					label="guests"
-					variant="standard"
-					{...register('guests')}
-					error={Boolean(errors.guests)}
-				>
-					{Array.from({ length: 8 }, (_, i) => i + 1).map((value) => (
-						<MenuItem key={value} value={value}>
-							{value}
-						</MenuItem>
-					))}
-				</Select>
+				<Controller
+					control={control}
+					name="guests"
+					render={({ field }) => {
+						return (
+							<Select
+								label="guests"
+								variant="standard"
+								error={Boolean(errors.guests)}
+								{...field}
+								onChange={(e) => field.onChange(e.target.value)}
+							>
+								{Array.from({ length: 8 }, (_, i) => i + 1).map((value) => (
+									<MenuItem key={value} value={value}>
+										{value}
+									</MenuItem>
+								))}
+							</Select>
+						);
+					}}
+				/>
 			</FormControl>
 			{action}
 		</form>

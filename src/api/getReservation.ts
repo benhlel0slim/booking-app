@@ -1,11 +1,8 @@
 import { URL_RESTAURANT } from '../constants/api';
-import { ReservationData } from '../types/reservation';
+import { GetEvent } from '../types/event';
 
-export const getRestaurantReservation = async (
-	restaurantId: string,
-	token: string
-) => {
-	const endpoint = `${URL_RESTAURANT}/event/${restaurantId}`;
+export const getRestaurantReservation = async (id: string, token: string) => {
+	const endpoint = `${URL_RESTAURANT}/event/${id}`;
 	try {
 		const response = await fetch(endpoint, {
 			headers: {
@@ -13,7 +10,7 @@ export const getRestaurantReservation = async (
 			},
 		});
 		if (response.ok) {
-			const result: Promise<ReservationData[]> = await response.json();
+			const result: Promise<GetEvent> = await response.json();
 			return result;
 		}
 	} catch (error) {
