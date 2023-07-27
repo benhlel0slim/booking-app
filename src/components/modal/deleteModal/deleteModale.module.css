@@ -1,0 +1,14 @@
+.modal {
+	align-self: flex-end;
+	margin: 10px 0 10px;
+	padding: 10px 0 10px;
+}
+.ModalBtn {
+	display: flex;
+	justify-content: center;
+	margin: 10px;
+	padding: 10px;
+}
+.title {
+	padding-top: 10px;
+}
