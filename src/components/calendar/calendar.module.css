@@ -1,90 +1,90 @@
 .container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-top: 20px;
-	margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  margin-bottom: 30px;
 }
 
 .legends {
-	display: flex;
-	justify-content: space-between;
-	font-size: 11px;
-	margin: 15px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  margin: 15px;
 }
 
 .legendGreen {
-	background-color: var(--color-accept);
-	border-radius: 4px;
-	width: 16px;
-	height: 16px;
-	margin-right: 8px;
+  background-color: var(--color-accept);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
 }
 
 .legendRed {
-	background-color: var(--color-warning);
-	border-radius: 4px;
-	width: 16px;
-	height: 16px;
-	margin-right: 8px;
-	margin-left: 18px;
+  background-color: var(--color-warning);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  margin-left: 18px;
 }
 
 .text {
-	font-size: 30px;
-	padding-top: 20px;
+  font-size: 30px;
+  padding-top: 20px;
 }
 
 .selectWrapper {
-	align-self: flex-end;
+  align-self: flex-end;
 }
 
 .select {
-	border-radius: 12px;
-	width: 114px;
-	height: 30px;
-	margin: 23px;
+  border-radius: 12px;
+  width: 114px;
+  height: 30px;
+  margin: 23px;
 }
 
 .reservationTime {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-content: space-around;
-	justify-content: center;
-	background: #fafafa;
-	border-radius: 10px;
-	width: 90%;
-	min-height: 70px;
-	padding: 24px 12px;
-	gap: 12px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: center;
+  background: #fafafa;
+  border-radius: 10px;
+  width: 90%;
+  min-height: 70px;
+  padding: 24px 12px;
+  gap: 12px;
 }
 
 .button {
-	border-style: none;
-	background-color: transparent;
-	cursor: pointer;
-	font-weight: bold;
-	color: var(--color-text);
+  border-style: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--color-text);
 }
 
 .skeleton {
-	width: 250px;
-	text-align: center;
+  width: 250px;
+  text-align: center;
 }
 .skeletonCalendar {
-	width: 350px;
-	height: 350px;
-	text-align: center;
+  width: 350px;
+  height: 350px;
+  text-align: center;
 }
 
 .skeletonTitle {
-	width: 400px;
+  width: 400px;
 }
 
 .skeletonWrapper {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

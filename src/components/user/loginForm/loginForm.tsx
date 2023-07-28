@@ -16,117 +16,117 @@ import { useRedirect } from '../../../hooks/useRedirect';
 import LoadingButton from '../../loadingButton/loadingButton';
 
 const schema = yup
-	.object({
-		email: yup
-			.string()
-			.email('email incorrect')
-			.required('Votre Email est obligatoire'),
-		password: yup
-			.string()
-			.matches(PASSWORD_REG_EXP, 'mot de passe invalide')
-			.required('Votre mot de passe est obligatoire'),
-	})
-	.required();
+  .object({
+    email: yup
+      .string()
+      .email('email incorrect')
+      .required('Votre Email est obligatoire'),
+    password: yup
+      .string()
+      .matches(PASSWORD_REG_EXP, 'mot de passe invalide')
+      .required('Votre mot de passe est obligatoire'),
+  })
+  .required();
 
 type FormData = yup.InferType<typeof schema>;
 
 function LoginForm() {
-	const setAuthToken = useSetRecoilState(AuthToken);
-	const [showPassword, setShowPassword] = useState(false);
-	const handleClickShowPassword = () => setShowPassword((show) => !show);
-	const handleMouseDownPassword = (
-		event: React.MouseEvent<HTMLButtonElement>
-	) => {
-		event.preventDefault();
-	};
+  const setAuthToken = useSetRecoilState(AuthToken);
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<FormData>({
-		resolver: yupResolver(schema),
-	});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
 
-	const { mutateAsync } = useLoginUser();
+  const { mutateAsync } = useLoginUser();
 
-	const onSubmit = async (data: FormData) => {
-		const response = await mutateAsync(data);
-		if ('cod' in response) {
-			const message = response.message.message;
-			toast(`Erreur, veuillez verifier vos coordonnées ${message ?? ''}`, {
-				position: 'bottom-right',
-				type: 'error',
-				autoClose: 5000,
-			});
-		} else {
-			setAuthToken(response.token);
-			/* localStorage.setItem('token', response.token); */
-		}
-	};
+  const onSubmit = async (data: FormData) => {
+    const response = await mutateAsync(data);
+    if ('cod' in response) {
+      const message = response.message.message;
+      toast(`Erreur, veuillez verifier vos coordonnées ${message ?? ''}`, {
+        position: 'bottom-right',
+        type: 'error',
+        autoClose: 5000,
+      });
+    } else {
+      setAuthToken(response.token);
+      /* localStorage.setItem('token', response.token); */
+    }
+  };
 
-	useRedirect();
+  useRedirect();
 
-	return (
-		<div className={styles.container}>
-			<div className={styles.title}>
-				<p>
-					Veuillez <b>vous connecter</b>
-				</p>
-			</div>
+  return (
+    <div className={styles.container}>
+      <div className={styles.title}>
+        <p>
+          Veuillez <b>vous connecter</b>
+        </p>
+      </div>
 
-			<form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
-				<div className={styles.input}>
-					<TextField
-						required
-						label="e-mail"
-						type="e-mail"
-						autoComplete="current-email"
-						variant="standard"
-						{...register('email')}
-						error={Boolean(errors.email)}
-						helperText={errors.email?.message}
-					/>
-					<TextField
-						required
-						label="mot de passe"
-						type={showPassword ? 'text' : 'password'}
-						InputProps={{
-							endAdornment: (
-								<InputAdornment position="end">
-									<IconButton
-										aria-label="toggle password visibility"
-										onClick={handleClickShowPassword}
-										onMouseDown={handleMouseDownPassword}
-									>
-										{showPassword ? <VisibilityOff /> : <Visibility />}
-									</IconButton>
-								</InputAdornment>
-							),
-						}}
-						variant="standard"
-						{...register('password')}
-						error={Boolean(errors.password)}
-						helperText={errors.password?.message}
-					/>
-				</div>
+      <form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.input}>
+          <TextField
+            required
+            label="e-mail"
+            type="e-mail"
+            autoComplete="current-email"
+            variant="standard"
+            {...register('email')}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+          />
+          <TextField
+            required
+            label="mot de passe"
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+            {...register('password')}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
+          />
+        </div>
 
-				<div className={styles.btn}>
-					<LoadingButton>se connecter</LoadingButton>
-				</div>
+        <div className={styles.btn}>
+          <LoadingButton>se connecter</LoadingButton>
+        </div>
 
-				<div className={styles.link}>
-					<Link to="/admin/signup">Ou Créer un compte</Link>
-				</div>
+        <div className={styles.link}>
+          <Link to="/admin/signup">Ou Créer un compte</Link>
+        </div>
 
-				<div className={styles.link}>
-					<Link to="">
-						Login as a <b>Demo User</b>
-					</Link>
-				</div>
-			</form>
-		</div>
-	);
+        <div className={styles.link}>
+          <Link to="">
+            Login as a <b>Demo User</b>
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
 }
 
 export default LoginForm;

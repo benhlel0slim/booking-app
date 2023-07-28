@@ -7,31 +7,31 @@ import { CreateEvent } from '../types/event';
 import { ReservationData } from '../types/reservation';
 
 const createRestaurantReservation = async (
-	reservation: CreateEvent,
-	token: string
+  reservation: CreateEvent,
+  token: string
 ) => {
-	const endpoint = `${URL_RESTAURANT}/event`;
-	try {
-		const rawResponse = await fetch(endpoint, {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify(reservation),
-		});
-		const content: ResponseWithError<ReservationData> =
-			await rawResponse.json();
-		return content;
-	} catch (error) {
-		throw new Error('something went wrong, the reservation was not sent');
-	}
+  const endpoint = `${URL_RESTAURANT}/event`;
+  try {
+    const rawResponse = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(reservation),
+    });
+    const content: ResponseWithError<ReservationData> =
+      await rawResponse.json();
+    return content;
+  } catch (error) {
+    throw new Error('something went wrong, the reservation was not sent');
+  }
 };
 
 export const useCreateRestaurantReservation = () => {
-	const _token = useRecoilValue(token);
-	return useMutation((adminReservation: CreateEvent) =>
-		createRestaurantReservation(adminReservation, _token)
-	);
+  const _token = useRecoilValue(token);
+  return useMutation((adminReservation: CreateEvent) =>
+    createRestaurantReservation(adminReservation, _token)
+  );
 };

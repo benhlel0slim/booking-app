@@ -4,23 +4,23 @@ import { URL_RESTAURANT } from '../constants/api';
 import { ResponseWithError } from '../types/error';
 
 const loginUser = async (user: User) => {
-	const endpoint = `${URL_RESTAURANT}/user/login`;
-	try {
-		const rawResponse = await fetch(endpoint, {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(user),
-		});
-		const response: ResponseWithError<{ token: string }> =
-			await rawResponse.json();
-		return response;
-	} catch (error) {
-		throw new Error('something went wrong');
-	}
+  const endpoint = `${URL_RESTAURANT}/user/login`;
+  try {
+    const rawResponse = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+    const response: ResponseWithError<{ token: string }> =
+      await rawResponse.json();
+    return response;
+  } catch (error) {
+    throw new Error('something went wrong');
+  }
 };
 export const useLoginUser = () => {
-	return useMutation(loginUser);
+  return useMutation(loginUser);
 };

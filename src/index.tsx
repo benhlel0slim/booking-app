@@ -11,27 +11,27 @@ import { RecoilRoot } from 'recoil';
 import 'react-calendar-timeline/lib/Timeline.css';
 
 const root = ReactDOM.createRoot(
-	document.getElementById('root') as HTMLElement
+  document.getElementById('root') as HTMLElement
 );
 
 const queryClient = new QueryClient();
 const theme = createTheme({
-	palette: {
-		primary: {
-			main: '#EC691A',
-		},
-	},
+  palette: {
+    primary: {
+      main: '#EC691A',
+    },
+  },
 });
 
 root.render(
-	<React.StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<ToastContainer />
-			<ThemeProvider theme={theme}>
-				<RecoilRoot>
-					<App />
-				</RecoilRoot>
-			</ThemeProvider>
-		</QueryClientProvider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ToastContainer />
+      <ThemeProvider theme={theme}>
+        <RecoilRoot>
+          <App />
+        </RecoilRoot>
+      </ThemeProvider>
+    </QueryClientProvider>
+  </React.StrictMode>
 );

@@ -8,24 +8,24 @@ import { ResponseWithError } from '../types/error';
  * `useMutation`
  */
 const createReservation = async (reservation: Reservation) => {
-	const endpoint = `${URL_RESTAURANT}/reservation`;
-	try {
-		const rawResponse = await fetch(endpoint, {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(reservation),
-		});
-		const content: ResponseWithError<ReservationData> =
-			await rawResponse.json();
-		return content;
-	} catch (error) {
-		throw new Error('something went wrong, the reservation was not sent');
-	}
+  const endpoint = `${URL_RESTAURANT}/reservation`;
+  try {
+    const rawResponse = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reservation),
+    });
+    const content: ResponseWithError<ReservationData> =
+      await rawResponse.json();
+    return content;
+  } catch (error) {
+    throw new Error('something went wrong, the reservation was not sent');
+  }
 };
 
 export const useCreateReservation = () => {
-	return useMutation(createReservation);
+  return useMutation(createReservation);
 };
