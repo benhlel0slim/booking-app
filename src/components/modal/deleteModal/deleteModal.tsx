@@ -6,7 +6,7 @@ import { getRestaurantReservation } from '../../../api/getReservation';
 import { useRecoilValue } from 'recoil';
 import { token } from '../../../store/authentication';
 import { useQuery } from 'react-query';
-import { deleteReservation } from '../../../api/deleteReservation';
+import { useDeleteReservation } from '../../../api/deleteReservation';
 
 const style = {
 	position: 'absolute',
@@ -29,6 +29,7 @@ function DeleteModal({ openModal, onClose, id, refetch }: Props) {
 	const { data } = useQuery(`${id}-reservation-detail`, () =>
 		getRestaurantReservation(id || '', _token)
 	);
+	const { mutateAsync, isLoading } = useDeleteReservation(id || '');
 
 	if (!data) {
 		return null;
@@ -48,12 +49,12 @@ function DeleteModal({ openModal, onClose, id, refetch }: Props) {
 						}
 						action={
 							<div className={styles.ModalBtn}>
-								<LoadingButton>SUPPRIMER</LoadingButton>
+								<LoadingButton isLoading={isLoading}>SUPPRIMER</LoadingButton>
 							</div>
 						}
 						defaultValues={data}
 						saveCallback={async () => {
-							await deleteReservation(id, _token);
+							await mutateAsync();
 							onClose();
 							refetch();
 						}}
