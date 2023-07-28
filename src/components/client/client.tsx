@@ -14,35 +14,35 @@ import { Navigation } from '../navigation-module/navigation';
 import styles from './client.module.css';
 
 function Client() {
-	const { restaurantId } = useParams();
-	const [searchParams, setSearchParams] = useSearchParams();
-	const step = searchParams.get('step');
-	const { data } = useQuery(`restaurant-${restaurantId}`, () =>
-		getRestaurant(restaurantId || '')
-	);
+  const { restaurantId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const step = searchParams.get('step');
+  const { data } = useQuery(`restaurant-${restaurantId}`, () =>
+    getRestaurant(restaurantId || '')
+  );
 
-	useEffect(() => {
-		if (!step) setSearchParams({ step: 'guest' });
-	}, [setSearchParams, step]);
+  useEffect(() => {
+    if (!step) setSearchParams({ step: 'guest' });
+  }, [setSearchParams, step]);
 
-	if (!data) {
-		return (
-			<div className={styles.circularProgress}>
-				<CircularProgress />
-			</div>
-		);
-	}
+  if (!data) {
+    return (
+      <div className={styles.circularProgress}>
+        <CircularProgress />
+      </div>
+    );
+  }
 
-	return (
-		<>
-			{<Navigation />}
-			{step === 'guest' && <Guest />}
-			{step === 'menu' && <Menu />}
-			{step === 'calendar' && <Calendar />}
-			{step === 'condition' && <Condition />}
-			{step === 'reservation' && <Reservation />}
-			{step === 'confirmation' && <Confirmation />}
-		</>
-	);
+  return (
+    <>
+      {<Navigation />}
+      {step === 'guest' && <Guest />}
+      {step === 'menu' && <Menu />}
+      {step === 'calendar' && <Calendar />}
+      {step === 'condition' && <Condition />}
+      {step === 'reservation' && <Reservation />}
+      {step === 'confirmation' && <Confirmation />}
+    </>
+  );
 }
 export default Client;

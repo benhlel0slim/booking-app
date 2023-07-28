@@ -1,124 +1,124 @@
 body {
-	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	color: var(--color-text);
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-text);
 }
 
 :root {
-	--color-primary: #ec691a;
-	--color-footer: #23313a;
-	--color-accept: #52b34f;
-	--color-warning: #ee1b34;
-	--color-text: #414141;
-	--color-logo: #414141;
-	--navbar-h: 30px;
-	--footer-h: 120px;
-	--box-shadow: 8px 3px 22px 10px rgba(150, 150, 150, 0.11);
+  --color-primary: #ec691a;
+  --color-footer: #23313a;
+  --color-accept: #52b34f;
+  --color-warning: #ee1b34;
+  --color-text: #414141;
+  --color-logo: #414141;
+  --navbar-h: 30px;
+  --footer-h: 120px;
+  --box-shadow: 8px 3px 22px 10px rgba(150, 150, 150, 0.11);
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-		monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 p {
-	margin: 0px;
+  margin: 0px;
 }
 
 ul {
-	list-style-type: none;
+  list-style-type: none;
 }
 
 a {
-	color: white;
-	text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 a:hover {
-	color: lightgrey;
+  color: lightgrey;
 }
 
 h3 {
-	margin: 0px;
+  margin: 0px;
 }
 
 .react-calendar {
-	width: fit-content;
-	height: auto;
-	max-width: 100%;
-	background: white;
-	border: none;
-	font-family: tahoma;
-	line-height: 12.07px;
-	box-shadow: var(--box-shadow);
-	border-radius: 16px;
-	padding: 24px;
+  width: fit-content;
+  height: auto;
+  max-width: 100%;
+  background: white;
+  border: none;
+  font-family: tahoma;
+  line-height: 12.07px;
+  box-shadow: var(--box-shadow);
+  border-radius: 16px;
+  padding: 24px;
 }
 
 .react-calendar__month-view__days {
-	display: grid !important;
-	grid-template-columns: repeat(7, 1fr);
-	column-gap: 8px;
-	row-gap: 5px;
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+  column-gap: 8px;
+  row-gap: 5px;
 }
 
 .react-calendar__tile {
-	padding: 6px;
-	background: #ececec;
-	order: 0;
-	flex-grow: 0;
-	height: 31px;
-	width: 31px;
+  padding: 6px;
+  background: #ececec;
+  order: 0;
+  flex-grow: 0;
+  height: 31px;
+  width: 31px;
 }
 
 .react-calendar__month-view__weekdays {
-	display: grid !important;
-	grid-template-columns: repeat(7, 1fr);
-	padding: 20px 0px;
-	font-weight: normal;
-	font-size: 12px;
-	font-style: normal;
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 20px 0px;
+  font-weight: normal;
+  font-size: 12px;
+  font-style: normal;
 }
 
 abbr[title] {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .react-calendar__navigation button:disabled {
-	background-color: white;
+  background-color: white;
 }
 
 .react-calendar__navigation {
-	margin: 0px;
-	padding-bottom: 20px;
-	border-bottom: 0.8px solid #e4e5e7;
+  margin: 0px;
+  padding-bottom: 20px;
+  border-bottom: 0.8px solid #e4e5e7;
 }
 
 .react-calendar__navigation__label {
-	order: -1;
+  order: -1;
 }
 
 .green {
-	background-color: var(--color-accept);
+  background-color: var(--color-accept);
 }
 .red {
-	background-color: var(--color-warning);
+  background-color: var(--color-warning);
 }
 button.react-calendar__tile.react-calendar__month-view__days__day.green {
-	color: white;
+  color: white;
 }
 button.react-calendar__tile.react-calendar__month-view__days__day.red {
-	color: white;
+  color: white;
 }
 .react-calendar__tile--active {
-	background-color: #414141;
+  background-color: #414141;
 }
 .demoLink {
-	display: flex;
-	justify-content: center;
-	padding-top: 100px;
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
 }

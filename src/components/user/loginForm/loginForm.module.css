@@ -1,48 +1,48 @@
 .container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
 }
 .title {
-	font-size: 30px;
-	padding: 30px;
+  font-size: 30px;
+  padding: 30px;
 }
 .forms {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 30px;
-	gap: 12px;
-	background: white;
-	border: 0px solid white;
-	font-family: tahoma;
-	line-height: 12.07px;
-	box-shadow: var(--box-shadow);
-	border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  gap: 12px;
+  background: white;
+  border: 0px solid white;
+  font-family: tahoma;
+  line-height: 12.07px;
+  box-shadow: var(--box-shadow);
+  border-radius: 16px;
 }
 .input {
-	display: flex;
-	flex-direction: column;
-	padding: 0px 15px 0px;
-	margin: 0px 15px 20px;
-	gap: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 15px 0px;
+  margin: 0px 15px 20px;
+  gap: 12px;
 }
 .btn {
-	display: flex;
-	justify-content: center;
-	margin: 10px;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
 }
 .link {
-	padding: 10px;
-	margin: 10px;
-	cursor: pointer;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
 }
 .link a {
-	color: #414141;
+  color: #414141;
 }
 @media screen and (max-width: 400px) {
-	.link {
-		font-size: 12px;
-	}
+  .link {
+    font-size: 12px;
+  }
 }

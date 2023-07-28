@@ -4,12 +4,12 @@
  * Convert UrlSearchParams to `{key:value,key2:value2}`
  */
 export const getKeyValuesFromUrlSearchParam = (
-	searchParams: URLSearchParams
+  searchParams: URLSearchParams
 ) => {
-	let initParam: Record<string, string> = {};
-	for (const [key, value] of searchParams.entries()) {
-		initParam = { ...initParam, [key]: value };
-	}
+  let initParam: Record<string, string> = {};
+  for (const [key, value] of searchParams.entries()) {
+    initParam = { ...initParam, [key]: value };
+  }
 
-	return initParam;
+  return initParam;
 };
