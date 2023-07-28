@@ -20,10 +20,10 @@ type Props = {
 	openModal: boolean;
 	onClose: () => void;
 	id: string;
-	refetch: () => void;
+	refetch: () => Promise<unknown>;
 };
 
-function DeleteModal({ openModal, onClose, id }: Props) {
+function DeleteModal({ openModal, onClose, id, refetch }: Props) {
 	const _token = useRecoilValue(token);
 
 	const { data } = useQuery(`${id}-reservation-detail`, () =>
@@ -55,6 +55,7 @@ function DeleteModal({ openModal, onClose, id }: Props) {
 						saveCallback={async () => {
 							await deleteReservation(id, _token);
 							onClose();
+							refetch();
 						}}
 					/>
 				</Box>

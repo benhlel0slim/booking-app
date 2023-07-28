@@ -14,9 +14,13 @@ const style = {
 	p: 4,
 };
 
-type Props = { openModal: boolean; onClose: () => void; refetch: () => void };
+type Props = {
+	openModal: boolean;
+	onClose: () => void;
+	refetch: () => Promise<unknown>;
+};
 
-function AddModal({ openModal, onClose }: Props) {
+function AddModal({ openModal, onClose, refetch }: Props) {
 	const { mutateAsync, isLoading } = useCreateRestaurantReservation();
 
 	return (
@@ -48,6 +52,7 @@ function AddModal({ openModal, onClose }: Props) {
 								return;
 							}
 							onClose();
+							refetch();
 						}}
 					/>
 				</Box>
