@@ -8,6 +8,7 @@ import { useEditRestaurant } from '../../../api/editRestaurant';
 import { CircularProgress } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Logout from '../../user/logout/logout';
 
 function EditRestaurant() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function EditRestaurant() {
   );
 
   const { mutateAsync, isLoading } = useEditRestaurant(restaurantId || '');
+
   if (!data)
     return (
       <div className={styles.circularProgress}>
@@ -31,6 +33,7 @@ function EditRestaurant() {
           Modifier <b> votre resto</b>
         </p>
       </div>
+      <Logout />
       <RestaurantForm
         action={
           <div className={styles.btn}>

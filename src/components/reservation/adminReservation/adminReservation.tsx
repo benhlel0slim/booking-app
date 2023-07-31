@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { useRedirect } from '../../../hooks/useRedirect';
 import AddModal from '../../modal/addModal/addModal';
 import DeleteModal from '../../modal/deleteModal/deleteModal';
+import Logout from '../../user/logout/logout';
 
 function AdminReservation() {
   const { restaurantId } = useParams();
@@ -75,6 +76,7 @@ function AdminReservation() {
           <AddModal openModal onClose={handleClick} refetch={refetch} />
         )}
       </div>
+      <Logout />
       <div className={styles.timelineCalendar}>
         <Timeline
           onItemClick={(id: string) => {

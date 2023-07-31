@@ -1,29 +1,69 @@
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
 import { getRestaurant } from '../../api/getRestaurant';
 import { useQuery } from 'react-query';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { ReactComponent as NavIcon } from '../../assets/navIcon.svg';
 import styles from './layout.module.css';
-
 import { LinkIcon } from '../linkIcon/linkIcon';
+import { useRecoilValue } from 'recoil';
+import { token } from '../../store/authentication';
 
 function Layout() {
   const { restaurantId } = useParams();
-  const { data } = useQuery(`restaurant-${restaurantId}`, () =>
+  const _token = useRecoilValue(token);
+  const { data: restaurant } = useQuery(`restaurant-${restaurantId}`, () =>
     getRestaurant(restaurantId || '')
   );
 
   return (
     <div>
-      <div className={styles.navbar}>
-        {!data && <NavIcon className={styles.navIcon} />}
-        {data && (
+      {restaurant && _token ? (
+        <div className={styles.adminNavbar}>
+          <NavIcon />
+          <NavLink
+            to={`/admin/restaurant/${restaurantId}/reservation`}
+            style={({ isActive, isPending }) => {
+              return {
+                fontWeight: isActive ? 'bold' : '',
+                color: isPending ? '' : 'black',
+              };
+            }}
+          >
+            <p>Reservations</p>
+          </NavLink>
+          <NavLink
+            to={`admin/restaurant/${restaurantId}/edit`}
+            style={({ isActive, isPending }) => {
+              return {
+                fontWeight: isActive ? 'bold' : '',
+                color: isPending ? '' : 'black',
+              };
+            }}
+          >
+            <p>mon resto</p>
+          </NavLink>
+          <NavLink
+            to={`/admin/restaurant/${restaurantId}/menu`}
+            style={({ isActive, isPending }) => {
+              return {
+                fontWeight: isActive ? 'bold' : '',
+                color: isPending ? '' : 'black',
+              };
+            }}
+          >
+            <p>menu</p>
+          </NavLink>
+        </div>
+      ) : (
+        <div className={styles.clientNavbar}>
           <p>
             <b>Reservation au Resto</b>
-            <span className={styles.restaurantName}>{` ${data?.name}`}</span>
+            <span
+              className={styles.restaurantName}
+            >{` ${restaurant?.name}`}</span>
           </p>
-        )}
-      </div>
+        </div>
+      )}
       <div className={styles.main}>
         <Outlet />
       </div>
