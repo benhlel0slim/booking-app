@@ -18,7 +18,6 @@ import { getRestaurant } from '../../../api/getRestaurant';
 import LoadingButton from '../../loadingButton/loadingButton';
 import { useEditMenu } from '../../../api/editMenu';
 import { toast } from 'react-toastify';
-import Logout from '../../user/logout/logout';
 
 function getStyles(item: string, menus: string[], theme: Theme) {
   return {
@@ -100,7 +99,6 @@ function AdminMenu() {
           Veuillez ajouter <b>vos menus</b>
         </p>
       </div>
-      <Logout />
       <form className={styles.forms} onSubmit={onSubmit}>
         <div className={styles.text}>
           <Typography>

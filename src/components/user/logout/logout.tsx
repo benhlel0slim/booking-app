@@ -1,27 +1,28 @@
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { token as AuthToken } from '../../../store/authentication';
-import { Switch } from '@mui/material';
-import styles from './logout.module.css';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function Logout() {
+  const navigate = useNavigate();
   const setAuthToken = useSetRecoilState(AuthToken);
 
-  const [checked, setChecked] = React.useState(true);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = () => {
     setAuthToken('');
-    setChecked(event.target.checked);
+    navigate('/admin/login');
   };
 
   return (
-    <div className={styles.logout}>
-      <Switch
-        checked={checked}
-        onChange={handleChange}
-        inputProps={{ 'aria-label': 'controlled' }}
-      />
-    </div>
+    <>
+      <Button
+        style={{ minHeight: 20, minWidth: 100, padding: 0 }}
+        onClick={handleChange}
+        variant="contained"
+      >
+        Logout
+      </Button>
+    </>
   );
 }
 
