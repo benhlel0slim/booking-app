@@ -23,12 +23,18 @@ function Layout() {
   const { data: restaurant } = useQuery(`restaurant-${restaurantId}`, () =>
     getRestaurant(restaurantId || '')
   );
-
+  console.log(selectedRestaurantId);
+  console.log(restaurant?.menu);
   return (
     <div>
       <div className={styles.navbar}>
         <NavIcon className={styles.navIcon} />
         {location.pathname.includes('admin/restaurant') && (
+          <div className={styles.logout}>
+            <Logout />
+          </div>
+        )}
+        {selectedRestaurantId && restaurant?.menu && (
           <div className={styles.adminNavbar}>
             <NavLink
               to={`/admin/restaurant/${selectedRestaurantId}/reservation`}
@@ -48,11 +54,9 @@ function Layout() {
             >
               <p>menu</p>
             </NavLink>
-            <div className={styles.logout}>
-              <Logout />
-            </div>
           </div>
         )}
+
         {location.pathname.startsWith('/restaurant') && (
           <p>
             <b>Reservation au Resto</b>
