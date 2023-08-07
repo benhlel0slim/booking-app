@@ -14,15 +14,13 @@ function Logout() {
   };
 
   return (
-    <>
-      <Button
-        style={{ minHeight: 20, minWidth: 100, padding: 0 }}
-        onClick={handleChange}
-        variant="contained"
-      >
-        Logout
-      </Button>
-    </>
+    <Button
+      style={{ minHeight: 20, minWidth: 100, padding: 0 }}
+      onClick={handleChange}
+      variant="text"
+    >
+      Logout
+    </Button>
   );
 }
 

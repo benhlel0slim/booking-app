@@ -13,9 +13,12 @@ import styles from './layout.module.css';
 import { LinkIcon } from '../linkIcon/linkIcon';
 import { navLinkStyle } from '../../constants/navLinkStyle';
 import Logout from '../user/logout/logout';
+import { useRecoilValue } from 'recoil';
+import { firstRestaurantId } from '../../store/selectedRestaurantId';
 
 function Layout() {
   const { restaurantId } = useParams();
+  const selectedRestaurantId = useRecoilValue(firstRestaurantId);
   let location = useLocation();
   const { data: restaurant } = useQuery(`restaurant-${restaurantId}`, () =>
     getRestaurant(restaurantId || '')
@@ -25,10 +28,10 @@ function Layout() {
     <div>
       <div className={styles.navbar}>
         <NavIcon className={styles.navIcon} />
-        {location.pathname.startsWith('/admin/restaurant') && (
+        {location.pathname.includes('admin/restaurant') && (
           <div className={styles.adminNavbar}>
             <NavLink
-              to={`/admin/restaurant/${restaurantId}/reservation`}
+              to={`/admin/restaurant/${selectedRestaurantId}/reservation`}
               style={navLinkStyle}
             >
               <p>Reservations</p>
