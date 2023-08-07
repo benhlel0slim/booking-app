@@ -23,8 +23,6 @@ function Layout() {
   const { data: restaurant } = useQuery(`restaurant-${restaurantId}`, () =>
     getRestaurant(restaurantId || '')
   );
-  console.log(selectedRestaurantId);
-  console.log(restaurant?.menu);
   return (
     <div>
       <div className={styles.navbar}>
