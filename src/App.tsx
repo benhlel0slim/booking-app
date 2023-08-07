@@ -1,45 +1,61 @@
 import React, { lazy, Suspense } from 'react';
-import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Layout from './components/layout/layout';
+import Client from './components/client/client';
+import { CircularProgress } from '@mui/material';
+import Demo from './components/demo/demo';
 
-const Client = lazy(() => import('./components/client/client'));
-const Layout = lazy(() => import('./components/layout/layout'));
-const Button = lazy(() => import('@mui/material/Button'));
-const AdminMenu = lazy(() => import('./components/menu/adminMenu/adminMenu'));
-const SignupForm = lazy(
-  () => import('./components/user/signupForm/signupForm')
+const AdminMenu = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "AdminMenu" */ './components/menu/adminMenu/adminMenu'
+    )
 );
-const LoginForm = lazy(() => import('./components/user/loginForm/loginForm'));
+const SignupForm = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "SignupForm" */ './components/user/signupForm/signupForm'
+    )
+);
+const LoginForm = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "LoginForm" */ './components/user/loginForm/loginForm'
+    )
+);
 const CreateRestaurant = lazy(
-  () => import('./components/restaurant/createRestaurant/createRestaurant')
+  () =>
+    import(
+      /* webpackChunkName: "CreateRestaurant" */ './components/restaurant/createRestaurant/createRestaurant'
+    )
 );
 const EditRestaurant = lazy(
-  () => import('./components/restaurant/editRestaurant/editRestaurant')
+  () =>
+    import(
+      /* webpackChunkName: "EditRestaurant" */ './components/restaurant/editRestaurant/editRestaurant'
+    )
 );
 const AdminReservation = lazy(
-  () => import('./components/reservation/adminReservation/adminReservation')
+  () =>
+    import(
+      /* webpackChunkName: "AdminReservation" */ './components/reservation/adminReservation/adminReservation'
+    )
 );
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Layout />
-      </Suspense>
-    ),
+    element: <Layout />,
+
     children: [
       {
         path: 'restaurant/:restaurantId',
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <Client />
-          </Suspense>
-        ),
+        element: <Client />,
       },
       {
         path: 'admin/login',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CircularProgress />}>
             <LoginForm />
           </Suspense>
         ),
@@ -47,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: 'admin/signup',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CircularProgress />}>
             <SignupForm />
           </Suspense>
         ),
@@ -55,7 +71,7 @@ const router = createBrowserRouter([
       {
         path: 'admin/restaurant',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CircularProgress />}>
             <CreateRestaurant />
           </Suspense>
         ),
@@ -63,7 +79,7 @@ const router = createBrowserRouter([
       {
         path: 'admin/restaurant/:restaurantId/edit',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CircularProgress />}>
             <EditRestaurant />
           </Suspense>
         ),
@@ -71,7 +87,7 @@ const router = createBrowserRouter([
       {
         path: `/admin/restaurant/:restaurantId/menu`,
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CircularProgress />}>
             <AdminMenu />
           </Suspense>
         ),
@@ -79,7 +95,7 @@ const router = createBrowserRouter([
       {
         path: `/admin/restaurant/:restaurantId/reservation`,
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<CircularProgress />}>
             <AdminReservation />
           </Suspense>
         ),
@@ -87,11 +103,9 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: (
-          <div className={'demoLink'}>
-            <Link to={'/restaurant/62c1a011e95e96a91dbfd023?step=guest'}>
-              <Button variant="contained">Demo</Button>
-            </Link>
-          </div>
+          <Suspense fallback={<CircularProgress />}>
+            <Demo />
+          </Suspense>
         ),
       },
     ],
@@ -100,7 +114,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<CircularProgress />}>
       <RouterProvider router={router} />
     </Suspense>
   );
