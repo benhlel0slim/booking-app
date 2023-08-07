@@ -17,6 +17,7 @@ function EditRestaurant() {
   );
 
   const { mutateAsync, isLoading } = useEditRestaurant(restaurantId || '');
+
   if (!data)
     return (
       <div className={styles.circularProgress}>

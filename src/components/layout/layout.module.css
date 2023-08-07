@@ -17,6 +17,21 @@
   justify-content: center;
   align-items: center;
 }
+.navbar p {
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.navIcon {
+  position: absolute;
+  left: 30px;
+}
+.adminNavbar {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  align-items: flex-end;
+}
 
 .main {
   min-height: calc(100vh - var(--footer-h) - var(--navbar-h));
@@ -24,16 +39,19 @@
   margin: 0 auto;
 }
 
+.logout {
+  position: absolute;
+  right: 30px;
+  font-size: 10px;
+  top: 3px;
+}
+
 .logo {
   position: absolute;
   right: 10px;
   bottom: 10px;
 }
-.navIcon {
-  position: absolute;
-  left: 30px;
-  top: 10px;
-}
+
 .button {
   display: flex;
   justify-content: center;
