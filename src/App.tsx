@@ -1,47 +1,88 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
-import Client from './components/client/client';
-import Layout from './components/layout/layout';
-import Button from '@mui/material/Button';
-import SignupForm from './components/user/signupForm/signupForm';
-import LoginForm from './components/user/loginForm/loginForm';
-import CreateRestaurant from './components/restaurant/createRestaurant/createRestaurant';
-import EditRestaurant from './components/restaurant/editRestaurant/editRestaurant';
-import AdminMenu from './components/menu/adminMenu/adminMenu';
-import AdminReservation from './components/reservation/adminReservation/adminReservation';
+
+const Client = lazy(() => import('./components/client/client'));
+const Layout = lazy(() => import('./components/layout/layout'));
+const Button = lazy(() => import('@mui/material/Button'));
+const AdminMenu = lazy(() => import('./components/menu/adminMenu/adminMenu'));
+const SignupForm = lazy(
+  () => import('./components/user/signupForm/signupForm')
+);
+const LoginForm = lazy(() => import('./components/user/loginForm/loginForm'));
+const CreateRestaurant = lazy(
+  () => import('./components/restaurant/createRestaurant/createRestaurant')
+);
+const EditRestaurant = lazy(
+  () => import('./components/restaurant/editRestaurant/editRestaurant')
+);
+const AdminReservation = lazy(
+  () => import('./components/reservation/adminReservation/adminReservation')
+);
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Layout />
+      </Suspense>
+    ),
     children: [
       {
         path: 'restaurant/:restaurantId',
-        element: <Client />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Client />
+          </Suspense>
+        ),
       },
       {
         path: 'admin/login',
-        element: <LoginForm />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <LoginForm />
+          </Suspense>
+        ),
       },
       {
         path: 'admin/signup',
-        element: <SignupForm />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <SignupForm />
+          </Suspense>
+        ),
       },
       {
         path: 'admin/restaurant',
-        element: <CreateRestaurant />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <CreateRestaurant />
+          </Suspense>
+        ),
       },
       {
         path: 'admin/restaurant/:restaurantId/edit',
-        element: <EditRestaurant />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <EditRestaurant />
+          </Suspense>
+        ),
       },
       {
         path: `/admin/restaurant/:restaurantId/menu`,
-        element: <AdminMenu />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <AdminMenu />
+          </Suspense>
+        ),
       },
       {
         path: `/admin/restaurant/:restaurantId/reservation`,
-        element: <AdminReservation />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <AdminReservation />
+          </Suspense>
+        ),
       },
       {
         path: '/',
@@ -58,7 +99,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
 
 export default App;
