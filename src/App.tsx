@@ -1,19 +1,52 @@
-import React from 'react';
-import { createBrowserRouter, Link, RouterProvider } from 'react-router-dom';
-import Client from './components/client/client';
+import React, { lazy, Suspense } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/layout/layout';
-import Button from '@mui/material/Button';
-import SignupForm from './components/user/signupForm/signupForm';
-import LoginForm from './components/user/loginForm/loginForm';
-import CreateRestaurant from './components/restaurant/createRestaurant/createRestaurant';
-import EditRestaurant from './components/restaurant/editRestaurant/editRestaurant';
-import AdminMenu from './components/menu/adminMenu/adminMenu';
-import AdminReservation from './components/reservation/adminReservation/adminReservation';
+import Client from './components/client/client';
+import { CircularProgress } from '@mui/material';
+import Demo from './components/demo/demo';
+
+const AdminMenu = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "AdminMenu" */ './components/menu/adminMenu/adminMenu'
+    )
+);
+const SignupForm = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "SignupForm" */ './components/user/signupForm/signupForm'
+    )
+);
+const LoginForm = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "LoginForm" */ './components/user/loginForm/loginForm'
+    )
+);
+const CreateRestaurant = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "CreateRestaurant" */ './components/restaurant/createRestaurant/createRestaurant'
+    )
+);
+const EditRestaurant = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "EditRestaurant" */ './components/restaurant/editRestaurant/editRestaurant'
+    )
+);
+const AdminReservation = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "AdminReservation" */ './components/reservation/adminReservation/adminReservation'
+    )
+);
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
+
     children: [
       {
         path: 'restaurant/:restaurantId',
@@ -21,36 +54,58 @@ const router = createBrowserRouter([
       },
       {
         path: 'admin/login',
-        element: <LoginForm />,
+        element: (
+          <Suspense fallback={<CircularProgress />}>
+            <LoginForm />
+          </Suspense>
+        ),
       },
       {
         path: 'admin/signup',
-        element: <SignupForm />,
+        element: (
+          <Suspense fallback={<CircularProgress />}>
+            <SignupForm />
+          </Suspense>
+        ),
       },
       {
         path: 'admin/restaurant',
-        element: <CreateRestaurant />,
+        element: (
+          <Suspense fallback={<CircularProgress />}>
+            <CreateRestaurant />
+          </Suspense>
+        ),
       },
       {
         path: 'admin/restaurant/:restaurantId/edit',
-        element: <EditRestaurant />,
+        element: (
+          <Suspense fallback={<CircularProgress />}>
+            <EditRestaurant />
+          </Suspense>
+        ),
       },
       {
         path: `/admin/restaurant/:restaurantId/menu`,
-        element: <AdminMenu />,
+        element: (
+          <Suspense fallback={<CircularProgress />}>
+            <AdminMenu />
+          </Suspense>
+        ),
       },
       {
         path: `/admin/restaurant/:restaurantId/reservation`,
-        element: <AdminReservation />,
+        element: (
+          <Suspense fallback={<CircularProgress />}>
+            <AdminReservation />
+          </Suspense>
+        ),
       },
       {
         path: '/',
         element: (
-          <div className={'demoLink'}>
-            <Link to={'/restaurant/62c1a011e95e96a91dbfd023?step=guest'}>
-              <Button variant="contained">Demo</Button>
-            </Link>
-          </div>
+          <Suspense fallback={<CircularProgress />}>
+            <Demo />
+          </Suspense>
         ),
       },
     ],
@@ -58,7 +113,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<CircularProgress />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
 
 export default App;
