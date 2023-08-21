@@ -71,7 +71,11 @@ export function Calendar() {
   const reservationTime = times?.map((time) => {
     const currentTime = dayjs(time).format('HH:mm');
     return (
-      <button className={styles.button} onClick={() => onNextPage(currentTime)}>
+      <button
+        data-cy="add-time"
+        className={styles.button}
+        onClick={() => onNextPage(currentTime)}
+      >
         {currentTime}
       </button>
     );
@@ -99,6 +103,7 @@ export function Calendar() {
   return (
     <div className={styles.container}>
       <CalendarComponent
+        data-cy="add-date"
         onChange={setDate}
         value={date}
         minDate={new Date()}
@@ -119,8 +124,8 @@ export function Calendar() {
       </div>
       <div className={styles.selectWrapper}>
         <Select
+          data-cy="input-duration"
           className={styles.select}
-          id="type of reservation"
           value={type}
           size="small"
           onChange={handleChange}

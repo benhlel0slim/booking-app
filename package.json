@@ -42,7 +42,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "lint": "eslint --ext js,ts,tsx src"
+    "lint": "eslint --ext js,ts,tsx src",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "rules": {
@@ -69,6 +70,7 @@
   "devDependencies": {
     "@types/react-calendar": "^3.9.0",
     "@types/react-calendar-timeline": "^0.28.2",
+    "cypress": "^12.17.3",
     "eslint-config-prettier": "^8.6.0",
     "husky": "^8.0.3",
     "prettier": "2.8.4"

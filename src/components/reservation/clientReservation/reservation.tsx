@@ -83,9 +83,10 @@ export function Reservation() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form data-cy="form-reservation" onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.forms}>
           <TextField
+            data-cy="input-name"
             required
             label="Nom Prenom"
             placeholder="Nom prenom"
@@ -95,6 +96,7 @@ export function Reservation() {
             helperText={errors.name?.message}
           />
           <TextField
+            data-cy="input-mail"
             required
             label="E-mail"
             type="e-mail"
@@ -105,6 +107,7 @@ export function Reservation() {
             helperText={errors.email?.message}
           />
           <TextField
+            data-cy="input-phone"
             required
             label="Numero de Telephone"
             type="numeric"

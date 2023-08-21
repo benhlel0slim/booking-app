@@ -37,6 +37,7 @@ export const Guest = () => {
         size="small"
         inputMode="numeric"
         inputProps={{
+          'data-cy': 'input-guest',
           min: 1,
           value: guest,
           max: 8,
@@ -56,6 +57,7 @@ export const Guest = () => {
         endAdornment={
           <InputAdornment position="end">
             <IconButton
+              data-cy="add-guest"
               disabled={guest === 8}
               size="small"
               onClick={() => handleClick('max')}
@@ -65,7 +67,7 @@ export const Guest = () => {
           </InputAdornment>
         }
       />
-      <Button onClick={onNextPage} variant="contained">
+      <Button data-cy="button-guest" onClick={onNextPage} variant="contained">
         Suivant
       </Button>
     </div>
