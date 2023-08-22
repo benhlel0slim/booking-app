@@ -71,13 +71,15 @@ export function Calendar() {
   const reservationTime = times?.map((time) => {
     const currentTime = dayjs(time).format('HH:mm');
     return (
-      <button
-        data-cy="add-time"
-        className={styles.button}
-        onClick={() => onNextPage(currentTime)}
-      >
-        {currentTime}
-      </button>
+      <div className={styles.reservationTime}>
+        <button
+          data-cy="add-time"
+          className={styles.button}
+          onClick={() => onNextPage(currentTime)}
+        >
+          {currentTime}
+        </button>
+      </div>
     );
   });
   if (
@@ -103,7 +105,7 @@ export function Calendar() {
   return (
     <div className={styles.container}>
       <CalendarComponent
-        data-cy="add-date"
+        data-cy="calendar-component"
         onChange={setDate}
         value={date}
         minDate={new Date()}
@@ -134,9 +136,8 @@ export function Calendar() {
           <MenuItem value="short">Court</MenuItem>
         </Select>
       </div>
-      <div className={styles.reservationTime}>
-        {reservationTime || 'Indisponible pour Reservation'}
-      </div>
+
+      {reservationTime || 'Indisponible pour Reservation'}
     </div>
   );
 }

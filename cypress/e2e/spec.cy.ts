@@ -12,11 +12,13 @@ describe('restaurant client flow test', () => {
     cy.location().should((loc) => {
       expect(loc.search).to.contains('step=calendar');
     });
-    cy.get('.react-calendar__tile').eq(24).should('contain', '24').click();
+    cy.intercept('GET', 'https://be-roan.vercel.app/month*').as('getMonth');
+    cy.wait('@getMonth');
+    cy.get('.green').first().click();
     cy.get('[data-cy=input-duration]').click();
     cy.contains('Long').click();
 
-    cy.get('[data-cy="add-time"]').eq(4).should('contain', '13:30').click();
+    cy.get('[data-cy="add-time"]').first().should('contain', '12:30').click();
 
     cy.location().should((loc) => {
       expect(loc.search).to.contains('step=condition');
