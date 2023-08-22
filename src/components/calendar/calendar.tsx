@@ -99,6 +99,7 @@ export function Calendar() {
   return (
     <div className={styles.container}>
       <CalendarComponent
+        data-cy="calendar-component"
         onChange={setDate}
         value={date}
         minDate={new Date()}
@@ -119,8 +120,8 @@ export function Calendar() {
       </div>
       <div className={styles.selectWrapper}>
         <Select
+          data-cy="input-duration"
           className={styles.select}
-          id="type of reservation"
           value={type}
           size="small"
           onChange={handleChange}
@@ -129,7 +130,7 @@ export function Calendar() {
           <MenuItem value="short">Court</MenuItem>
         </Select>
       </div>
-      <div className={styles.reservationTime}>
+      <div data-cy="add-time" className={styles.reservationTime}>
         {reservationTime || 'Indisponible pour Reservation'}
       </div>
     </div>

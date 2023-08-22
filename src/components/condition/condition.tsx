@@ -38,7 +38,11 @@ export function Condition() {
           <br /> {` ${data?.name}.`}
         </p>
       </div>
-      <Button onClick={onNextPage} variant="contained">
+      <Button
+        data-cy="button-condition"
+        onClick={onNextPage}
+        variant="contained"
+      >
         Accepter
       </Button>
     </div>

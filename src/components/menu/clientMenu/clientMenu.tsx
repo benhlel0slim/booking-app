@@ -50,6 +50,7 @@ export function Menu() {
       <div className={styles.formControl}>
         <FormControl>
           <RadioGroup
+            data-cy="add-menu"
             aria-label="Menu for the restaurant"
             name="Menu for the restaurant"
             value={value}
@@ -59,7 +60,7 @@ export function Menu() {
           </RadioGroup>
         </FormControl>
       </div>
-      <Button onClick={onNextPage} variant="contained">
+      <Button data-cy="button-menu" onClick={onNextPage} variant="contained">
         Suivant
       </Button>
     </div>
